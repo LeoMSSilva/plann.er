@@ -9,7 +9,11 @@
     "dev": "vite",
     "lint": "yarn biome check --write .",
     "lint-staged": "lint-staged",
+    "prepare": "cd .. && husky web/.husky && echo 'echo \"Husky pre-commit started!\\\\n\"\nnpx lint-staged\necho \"\\\\nHusky pre-commit finished!\\\\n\"' > web/.husky/pre-commit",
     "preview": "vite preview"
+  },
+  "lint-staged": {
+    "*": "yarn lint-staged"
   },
   "dependencies": {
     "react": "^18.3.1",
@@ -20,6 +24,7 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react-swc": "^3.5.0",
+    "husky": "^9.0.11",
     "lint-staged": "^15.2.7",
     "typescript": "^5.2.2",
     "vite": "^5.3.1"
