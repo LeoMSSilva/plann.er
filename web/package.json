@@ -8,6 +8,7 @@
     "clean": "rm -rf node_modules dist yarn.lock && yarn",
     "dev": "vite",
     "lint": "yarn biome check --write .",
+    "lint-staged": "lint-staged",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -19,6 +20,7 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react-swc": "^3.5.0",
+    "lint-staged": "^15.2.7",
     "typescript": "^5.2.2",
     "vite": "^5.3.1"
   }
