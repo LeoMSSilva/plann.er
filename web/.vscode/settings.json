@@ -1,0 +1,8 @@
+{
+  "editor.formatOnSave": true,
+  "biome.enabled": true,
+  "editor.defaultFormatter": "biomejs.biome",
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  }
+}
