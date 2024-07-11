@@ -1,6 +1,6 @@
 import { Calendar, MapPin } from "lucide-react";
 import { useState } from "react";
-import { Input, InputContainer } from "../../Components";
+import { Input, InputContainer, SeparatorY } from "../../Components";
 import { Footer, Header, Layout } from "./Components";
 
 export function TripCreation() {
@@ -29,6 +29,7 @@ export function TripCreation() {
           >
             <Calendar className="size-5 text-zinc-400" />
           </Input>
+          <SeparatorY />
           <h1>Trip Creation</h1>
         </InputContainer>
       </div>
