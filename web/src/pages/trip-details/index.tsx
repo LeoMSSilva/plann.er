@@ -27,123 +27,150 @@ export function TripDetails() {
   const inputLocal = "Brasil";
   const inputDate = "hoje";
 
-  const mocksActivities: IActivity[] = [
-    {
-      date: new Date("2024-07-09T03:24:00").toString(),
-      activities: [
-        {
-          id: "1",
-          title: "Cafe da manha",
-          occurs_at: new Date("2024-07-10T03:24:00").toString(),
-        },
-        {
-          id: "2",
-          title: "Cafe da manha2",
-          occurs_at: new Date("2024-07-10T03:24:00").toString(),
-        },
-      ],
-    },
-    {
-      date: new Date("2024-07-10T03:24:00").toString(),
-      activities: [
-        {
-          id: "2",
-          title: "Academia",
-          occurs_at: new Date(Date.now()).toString(),
-        },
-      ],
-    },
-    {
-      date: new Date(Date.now()).toString(),
-      activities: [],
-    },
-  ];
-
-  const mocksLinks: ILink[] = [
-    {
-      id: "1",
-      title: "Reserva do AirBnB",
-      url: "https://www.airbnb.com.br/rooms/104700011",
-    },
-    {
-      id: "2",
-      title: "Reserva do AirBnB2",
-      url: "https://www.airbnb.com.br/rooms/104700011",
-    },
-    {
-      id: "3",
-      title: "Reserva do AirBnB3",
-      url: "https://www.airbnb.com.br/rooms/104700011",
-    },
-  ];
-
-  const mocksParticipants: IParticipant[] = [
-    {
-      id: "1",
-      name: "Teste",
-      email: "teste@teste.teste",
-      is_confirmed: false,
-    },
-    {
-      id: "2",
-      name: "Teste2",
-      email: "teste2@teste.teste",
-      is_confirmed: false,
-    },
-    {
-      id: "3",
-      name: "Teste3",
-      email: "teste3@teste.teste",
-      is_confirmed: true,
-    },
-  ];
-
   const [isActivitiesModalOpen, setIsActivitiesModalOpen] = useState(false);
   const [isLinksModalOpen, setIsLinksModalOpen] = useState(false);
-  const [isConfirmTripModalOpen, setIsConfirmTripModalOpen] = useState(false);
+  const [isInviteToTravelModalOpen, setIsInviteToTravelModalOpen] =
+    useState(false);
 
   const [inputActivityTitle, setInputActivityTitle] = useState("");
   const [inputActivityURL, setInputActivityURL] = useState("");
-  const [inputActivities, setInputActivities] =
-    useState<IActivity[]>(mocksActivities);
+  const [inputActivities, setInputActivities] = useState<IActivity[]>([]);
 
   const [inputLinkTitle, setInputLinkTitle] = useState("");
   const [inputLinkOccursAt, setInputLinkOccursAt] = useState("");
-  const [inputLinks, setInputLinks] = useState<ILink[]>(mocksLinks);
+  const [inputLinks, setInputLinks] = useState<ILink[]>([]);
 
   const [inputParticipantName, setInputParticipantName] = useState("");
   const [inputParticipantEmail, setInputParticipantEmail] = useState("");
-  const [inputParticipants, setInputParticipants] =
-    useState<IParticipant[]>(mocksParticipants);
+  const [inputParticipants, setInputParticipants] = useState<IParticipant[]>(
+    [],
+  );
 
-  function handleToggleActivitiesModal(state: boolean) {
+  function handleToggleCreateActivitiesModal(state: boolean) {
     setIsActivitiesModalOpen(state);
   }
 
-  function handleToggleLinksModal(state: boolean) {
+  function handleToggleCreateLinksModal(state: boolean) {
     setIsLinksModalOpen(state);
   }
 
-  function handleToggleConfirmTripModal(state: boolean) {
-    setIsConfirmTripModalOpen(state);
+  function handleToggleInviteToTravelModal(state: boolean) {
+    setIsInviteToTravelModalOpen(state);
   }
 
-  function handleActivitiesModal(event: FormEvent<HTMLFormElement>) {
+  function handleCreateActivityModal(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    alert("Atividade criada com sucesso!");
+    const data = new FormData(event.currentTarget);
+    const title = data.get("title") as string;
+    const occurs_at = data.get("occurs_at") as string;
+
+    if (!occurs_at || !title) {
+      alert("Preencha todos os campos");
+      return;
+    }
+
+    if (
+      inputActivities.length > 0 &&
+      inputActivities.some((activity) =>
+        activity.activities.some(
+          (activity) => activity.occurs_at === occurs_at,
+        ),
+      )
+    ) {
+      alert("Esta atividade já foi adicionada");
+      return;
+    }
+
+    const newActivity: IActivity = {
+      date: new Date().toString(),
+      activities: [
+        {
+          id: String(inputActivities.length + 1),
+          title,
+          occurs_at,
+        },
+      ],
+    };
+    setInputActivities((activity) => [...activity, newActivity]);
+    setIsActivitiesModalOpen(false);
+    setInputActivityTitle("");
+    setInputActivityURL("");
   }
 
-  function handleLinksModal(event: FormEvent<HTMLFormElement>) {
+  function handleCreateLinkModal(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    alert("Link criado com sucesso!");
+    const data = new FormData(event.currentTarget);
+    const title = data.get("title") as string;
+    const url = data.get("url") as string;
+
+    if (!url || !title) {
+      alert("Preencha todos os campos");
+      return;
+    }
+
+    if (inputLinks.map((link) => link.url).includes(url)) {
+      alert("Este link já foi adicionado");
+      return;
+    }
+
+    console.log(url);
+
+    if (!url.match(/^https?:\/\/[a-zA-Z0-9][a-zA-Z0-9_|\-|\.]+$/)) {
+      alert("Formato de url inválido");
+      return;
+    }
+
+    const newLink: ILink = {
+      id: String(inputParticipants.length + 1),
+      title,
+      url,
+    };
+    setInputLinks((link) => [...link, newLink]);
+    setIsLinksModalOpen(false);
+    setInputLinkTitle("");
+    setInputLinkOccursAt("");
   }
 
-  function handleConfirmTripModal(event: FormEvent<HTMLFormElement>) {
+  function handleInviteToTravelModal(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    alert("Convidado com sucesso!");
+    const data = new FormData(event.currentTarget);
+    const name = data.get("name") as string;
+    const email = data.get("email") as string;
+
+    if (!email || !name) {
+      alert("Preencha todos os campos");
+      return;
+    }
+
+    if (
+      inputParticipants.map((participant) => participant.email).includes(email)
+    ) {
+      alert("Este email ja foi adicionado");
+      return;
+    }
+
+    if (
+      !email.match(
+        /^[a-z]+((_|\-|\.)[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)+$/,
+      )
+    ) {
+      alert("Formato de email inválido");
+      return;
+    }
+
+    const newParticipant: IParticipant = {
+      id: String(inputParticipants.length + 1),
+      name,
+      email,
+      is_confirmed: false,
+    };
+    setInputParticipants((participant) => [...participant, newParticipant]);
+    setIsInviteToTravelModalOpen(false);
+    setInputParticipantName("");
+    setInputParticipantEmail("");
   }
 
   return (
@@ -156,7 +183,7 @@ export function TripDetails() {
         <div className="flex-1 space-y-6">
           <div className="flex items-center justify-between">
             <h2 className="text-3xl font-semibold">Atividades</h2>
-            <Button onClick={() => handleToggleActivitiesModal(true)}>
+            <Button onClick={() => handleToggleCreateActivitiesModal(true)}>
               <Plus className="size-5" />
               Cadastrar atividade
             </Button>
@@ -235,7 +262,7 @@ export function TripDetails() {
             <Button
               size="full"
               variant="secondary"
-              onClick={() => handleToggleLinksModal(true)}
+              onClick={() => handleToggleCreateLinksModal(true)}
             >
               <Plus className="size-5" />
               Cadastrar novo link
@@ -278,7 +305,7 @@ export function TripDetails() {
             <Button
               size="full"
               variant="secondary"
-              onClick={() => handleToggleConfirmTripModal(true)}
+              onClick={() => handleToggleInviteToTravelModal(true)}
             >
               <UserCog className="size-5" />
               Gerenciar convidados
@@ -291,14 +318,14 @@ export function TripDetails() {
         <ModalContainer>
           <ModalHeaderContainer
             title="Cadastrar atividade"
-            handleToggle={handleToggleActivitiesModal}
+            handleToggle={handleToggleCreateActivitiesModal}
           >
             <p className="text-sm text-zinc-400">
               Todos convidados podem visualizar as atividades.
             </p>
           </ModalHeaderContainer>
           <form
-            onSubmit={handleActivitiesModal}
+            onSubmit={handleCreateActivityModal}
             className="space-y-4 w-full"
           >
             <InputContainer variant="secondary">
@@ -337,14 +364,14 @@ export function TripDetails() {
         <ModalContainer>
           <ModalHeaderContainer
             title="Cadastrar link"
-            handleToggle={handleToggleLinksModal}
+            handleToggle={handleToggleCreateLinksModal}
           >
             <p className="text-sm text-zinc-400">
               Todos convidados podem visualizar os links importantes.{" "}
             </p>
           </ModalHeaderContainer>
           <form
-            onSubmit={handleLinksModal}
+            onSubmit={handleCreateLinkModal}
             className="space-y-4 w-full"
           >
             <InputContainer variant="secondary">
@@ -379,11 +406,11 @@ export function TripDetails() {
         </ModalContainer>
       )}
 
-      {isConfirmTripModalOpen && (
+      {isInviteToTravelModalOpen && (
         <ModalContainer>
           <ModalHeaderContainer
             title="Confirmar participação"
-            handleToggle={handleToggleConfirmTripModal}
+            handleToggle={handleToggleInviteToTravelModal}
           >
             <p className="text-sm text-zinc-400">
               Você foi convidado(a) para participar de uma viagem para{" "}
@@ -397,7 +424,7 @@ export function TripDetails() {
             </p>
           </ModalHeaderContainer>
           <form
-            onSubmit={handleConfirmTripModal}
+            onSubmit={handleInviteToTravelModal}
             className="space-y-4 w-full"
           >
             <InputContainer variant="secondary">
