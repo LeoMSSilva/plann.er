@@ -1,8 +1,25 @@
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { CircleCheck, CircleDashed, Link2, Plus, UserCog } from "lucide-react";
+import {
+  Calendar,
+  CircleCheck,
+  CircleDashed,
+  Link2,
+  Mail,
+  Plus,
+  Tag,
+  User,
+  UserCog,
+} from "lucide-react";
 import { useState } from "react";
-import { Button, InputContainer, SeparatorX } from "../../Components";
+import {
+  Button,
+  Input,
+  InputContainer,
+  ModalContainer,
+  ModalHeaderContainer,
+  SeparatorX,
+} from "../../Components";
 import type { IActivity, ILink, IParticipant } from "../../Interfaces";
 import { Header } from "./Components";
 
@@ -81,11 +98,17 @@ export function TripDetails() {
     },
   ];
 
+  const [inputActivityTitle, setInputActivityTitle] = useState("");
+  const [inputActivityURL, setInputActivityURL] = useState("");
   const [inputActivities, setInputActivities] =
     useState<IActivity[]>(mocksActivities);
 
+  const [inputLinkTitle, setInputLinkTitle] = useState("");
+  const [inputLinkOccursAt, setInputLinkOccursAt] = useState("");
   const [inputLinks, setInputLinks] = useState<ILink[]>(mocksLinks);
 
+  const [inputParticipantName, setInputParticipantName] = useState("");
+  const [inputParticipantEmail, setInputParticipantEmail] = useState("");
   const [inputParticipants, setInputParticipants] =
     useState<IParticipant[]>(mocksParticipants);
 
@@ -227,6 +250,136 @@ export function TripDetails() {
           </div>
         </div>
       </main>
+
+      <ModalContainer>
+        <ModalHeaderContainer
+          title="Cadastrar atividade"
+          handleToggle={() => {}}
+        >
+          <p className="text-sm text-zinc-400">
+            Todos convidados podem visualizar as atividades.
+          </p>
+        </ModalHeaderContainer>
+        <form className="space-y-4 w-full">
+          <InputContainer variant="secondary">
+            <Input
+              placeholder="Qual a atividade?"
+              type="text"
+              name="title"
+              value={inputActivityTitle}
+              setValue={setInputActivityTitle}
+            >
+              <Tag className="size-5 text-zinc-400" />
+            </Input>
+          </InputContainer>
+          <InputContainer variant="secondary">
+            <Input
+              placeholder="Data e horário da atividade"
+              type="datetime-local"
+              name="occurs_at"
+              value={inputActivityURL}
+              setValue={setInputActivityURL}
+            >
+              <Calendar className="size-5 text-zinc-400" />
+            </Input>
+          </InputContainer>
+          <Button
+            size="full"
+            type="submit"
+          >
+            Salvar atividade
+          </Button>
+        </form>
+      </ModalContainer>
+
+      <ModalContainer>
+        <ModalHeaderContainer
+          title="Cadastrar link"
+          handleToggle={() => {}}
+        >
+          <p className="text-sm text-zinc-400">
+            Todos convidados podem visualizar os links importantes.{" "}
+          </p>
+        </ModalHeaderContainer>
+        <form className="space-y-4 w-full">
+          <InputContainer variant="secondary">
+            <Input
+              placeholder="Título do link"
+              type="text"
+              name="title"
+              value={inputLinkTitle}
+              setValue={setInputLinkTitle}
+            >
+              <Tag className="size-5 text-zinc-400" />
+            </Input>
+          </InputContainer>
+          <InputContainer variant="secondary">
+            <Input
+              placeholder="URL"
+              type="text"
+              name="url"
+              value={inputLinkOccursAt}
+              setValue={setInputLinkOccursAt}
+            >
+              <Link2 className="size-5 text-zinc-400" />
+            </Input>
+          </InputContainer>
+          <Button
+            size="full"
+            type="submit"
+          >
+            Salvar link
+          </Button>
+        </form>
+      </ModalContainer>
+
+      <ModalContainer>
+        <ModalHeaderContainer
+          title="Confirmar participação"
+          handleToggle={() => {}}
+        >
+          <p className="text-sm text-zinc-400">
+            Você foi convidado(a) para participar de uma viagem para{" "}
+            <span className="text-zinc-100 font-semibold">{inputLocal}</span>{" "}
+            nas datas de{" "}
+            <span className="text-zinc-100 font-semibold">{inputDate}</span>.
+          </p>
+
+          <p className="text-sm text-zinc-400">
+            Para confirmar sua presença na viagem, preencha os dados abaixo:
+          </p>
+        </ModalHeaderContainer>
+        <form className="space-y-4 w-full">
+          <InputContainer variant="secondary">
+            <Input
+              placeholder="Seu nome completo"
+              type="text"
+              name="name"
+              value={inputParticipantName}
+              setValue={setInputParticipantName}
+            >
+              <User className="size-5 text-zinc-400" />
+            </Input>
+          </InputContainer>
+          <InputContainer variant="secondary">
+            <Input
+              placeholder="Seu e-mail"
+              type="email"
+              name="email"
+              value={inputParticipantEmail}
+              setValue={setInputParticipantEmail}
+            >
+              <Mail className="size-5 text-zinc-400" />
+            </Input>
+          </InputContainer>
+          <Button
+            size="full"
+            type="submit"
+          >
+            Confirmar minha presença
+          </Button>
+        </form>
+      </ModalContainer>
     </div>
   );
 }
