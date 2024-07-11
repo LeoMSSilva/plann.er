@@ -1,12 +1,16 @@
-import { Calendar, MapPin } from "lucide-react";
+import { ArrowRight, Calendar, MapPin, Settings2 } from "lucide-react";
 import { useState } from "react";
-import { Input, InputContainer, SeparatorY } from "../../Components";
+import { Button, Input, InputContainer, SeparatorY } from "../../Components";
 import { Footer, Header, Layout } from "./Components";
 
 export function TripCreation() {
   const [inputLocal, setInputLocal] = useState("");
   const [inputDate, setInputDate] = useState("");
   const [isGuestsInputOpen, setIsGuestsInputOpen] = useState(false);
+
+  function handleToggleIsGuestsInputOpen(state: boolean) {
+    setIsGuestsInputOpen(state);
+  }
 
   return (
     <Layout>
@@ -30,7 +34,23 @@ export function TripCreation() {
             <Calendar className="size-5 text-zinc-400" />
           </Input>
           <SeparatorY />
-          <h1>Trip Creation</h1>
+          <Button
+            type="button"
+            variant={isGuestsInputOpen ? "secondary" : "primary"}
+            onClick={() => handleToggleIsGuestsInputOpen(!isGuestsInputOpen)}
+          >
+            {isGuestsInputOpen ? (
+              <>
+                Alterar local/data
+                <Settings2 className="size-5" />
+              </>
+            ) : (
+              <>
+                Continuar
+                <ArrowRight className="size-5" />
+              </>
+            )}
+          </Button>
         </InputContainer>
       </div>
       <Footer />
