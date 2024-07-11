@@ -1,3 +1,4 @@
+import { Input } from "./input";
 import { InputContainer } from "./inputContainer";
 
-export { InputContainer };
+export { Input, InputContainer };
