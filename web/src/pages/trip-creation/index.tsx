@@ -1,6 +1,13 @@
 import { ArrowRight, Calendar, MapPin, Settings2 } from "lucide-react";
 import { useState } from "react";
-import { Button, Input, InputContainer, SeparatorY } from "../../Components";
+import {
+  Button,
+  Input,
+  InputContainer,
+  ModalContainer,
+  ModalHeaderContainer,
+  SeparatorY,
+} from "../../Components";
 import { Footer, Header, Layout } from "./Components";
 
 export function TripCreation() {
@@ -52,6 +59,21 @@ export function TripCreation() {
             )}
           </Button>
         </InputContainer>
+
+        <ModalContainer>
+          <ModalHeaderContainer
+            title="Confirmar criação da viagem"
+            handleToggle={() => {}}
+          >
+            <p className="text-sm text-zinc-400">
+              Para concluir a criação da viagem para{" "}
+              <span className="text-zinc-100 font-semibold">{inputLocal}</span>{" "}
+              nas datas de{" "}
+              <span className="text-zinc-100 font-semibold">{inputDate}</span>{" "}
+              preencha seus dados abaixo:
+            </p>
+          </ModalHeaderContainer>
+        </ModalContainer>
       </div>
       <Footer />
     </Layout>
