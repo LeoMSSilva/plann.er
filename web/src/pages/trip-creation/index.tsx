@@ -1,8 +1,9 @@
-import { Layout } from "./Components";
+import { Header, Layout } from "./Components";
 
 export function TripCreation() {
   return (
     <Layout>
+      <Header />
       <h1>Trip Creation</h1>
     </Layout>
   );
