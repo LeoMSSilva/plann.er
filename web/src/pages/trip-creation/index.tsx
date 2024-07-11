@@ -1,10 +1,15 @@
+import { InputContainer } from "../../Components";
 import { Footer, Header, Layout } from "./Components";
 
 export function TripCreation() {
   return (
     <Layout>
       <Header />
-      <h1>Trip Creation</h1>
+      <div className="space-y-4">
+        <InputContainer>
+          <h1>Trip Creation</h1>
+        </InputContainer>
+      </div>
       <Footer />
     </Layout>
   );
