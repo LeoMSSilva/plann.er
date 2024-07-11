@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { CircleCheck, CircleDashed, Plus } from "lucide-react";
-import { Button, InputContainer } from "../../Components";
-import { Header } from "./Components";
-import type { IActivity } from "../../Interfaces";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { CircleCheck, CircleDashed, Link2, Plus } from "lucide-react";
+import { useState } from "react";
+import { Button, InputContainer } from "../../Components";
+import type { IActivity, ILink } from "../../Interfaces";
+import { Header } from "./Components";
 
 export function TripDetails() {
   const inputLocal = "Brasil";
@@ -42,8 +42,28 @@ export function TripDetails() {
     },
   ];
 
+  const mocksLinks: ILink[] = [
+    {
+      id: "1",
+      title: "Reserva do AirBnB",
+      url: "https://www.airbnb.com.br/rooms/104700011",
+    },
+    {
+      id: "2",
+      title: "Reserva do AirBnB2",
+      url: "https://www.airbnb.com.br/rooms/104700011",
+    },
+    {
+      id: "3",
+      title: "Reserva do AirBnB3",
+      url: "https://www.airbnb.com.br/rooms/104700011",
+    },
+  ];
+
   const [inputActivities, setInputActivities] =
     useState<IActivity[]>(mocksActivities);
+
+  const [inputLinks, setInputLinks] = useState<ILink[]>(mocksLinks);
 
   return (
     <div className="max-w-6xl px-6 py-10 mx-auto space-y-8">
@@ -102,7 +122,43 @@ export function TripDetails() {
         </div>
 
         <div className="w-80 space-y-6">
-          
+          <div className="space-y-6">
+            <span className="text-xl font-semibold text-zinc-50">
+              Links importantes
+            </span>
+            <div className="space-y-5">
+              {inputLinks.length > 0 ? (
+                inputLinks.map((link) => (
+                  <div
+                    key={link.id}
+                    className="flex items-center justify-between gap-4"
+                  >
+                    <div className="space-y-1.5 flex-1">
+                      <span className="block font-medium text-zinc-100">
+                        {link.title}
+                      </span>
+                      <a
+                        href={link.url}
+                        className="block text-zinc-400 hover:text-zinc-200  truncate"
+                      >
+                        {link.url}
+                      </a>
+                    </div>
+                    <Link2 className="size-5 text-zinc-400" />
+                  </div>
+                ))
+              ) : (
+                <>Nenhum link cadastrado!</>
+              )}
+            </div>
+            <Button
+              size="full"
+              variant="secondary"
+            >
+              <Plus className="size-5" />
+              Cadastrar novo link
+            </Button>
+          </div>
         </div>
       </main>
     </div>
