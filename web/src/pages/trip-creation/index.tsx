@@ -10,6 +10,7 @@ import {
   X,
 } from "lucide-react";
 import { type FormEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Button,
   Input,
@@ -21,21 +22,20 @@ import {
 import type { IParticipant } from "../../Interfaces";
 import { Footer, Header, Layout } from "./Components";
 
-const mockParticipant: IParticipant = {
-  id: "1",
-  name: "teste",
-  email: "teste@teste.com",
-  is_confirmed: false,
-};
 export function TripCreation() {
+  const navigate = useNavigate();
+
   const [inputLocal, setInputLocal] = useState("");
   const [inputDate, setInputDate] = useState("");
 
   const [inputParticipantName, setInputParticipantName] = useState("");
   const [inputParticipantEmail, setInputParticipantEmail] = useState("");
-  const [inputParticipants, setInputParticipants] = useState<IParticipant[]>([
-    mockParticipant,
-  ]);
+  const [inputParticipants, setInputParticipants] = useState<IParticipant[]>(
+    [],
+  );
+
+  const [inputInviterName, setInputInviterName] = useState("");
+  const [inputInviterEmail, setInputInviterEmail] = useState("");
 
   const [isGuestsInputOpen, setIsGuestsInputOpen] = useState(false);
   const [isGuestModalOpen, setIsGuestModalOpen] = useState(false);
@@ -55,16 +55,76 @@ export function TripCreation() {
 
   function handleAddNewEmailToInvite(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    alert("Adicionado com sucesso!");
+
+    const data = new FormData(event.currentTarget);
+    const name = data.get("name") as string;
+    const email = data.get("email") as string;
+
+    if (!email || !name) {
+      alert("Preencha todos os campos");
+      return;
+    }
+
+    if (
+      inputParticipants.map((participant) => participant.email).includes(email)
+    ) {
+      alert("Este email ja foi adicionado");
+      return;
+    }
+
+    if (
+      !email.match(
+        /^[a-z]+((_|\-|\.)[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)+$/,
+      )
+    ) {
+      alert("Formato de email inválido");
+      return;
+    }
+
+    const newParticipant: IParticipant = {
+      id: String(inputParticipants.length + 1),
+      name,
+      email,
+      is_confirmed: false,
+    };
+    setInputParticipants((participant) => [...participant, newParticipant]);
+    setInputParticipantName("");
+    setInputParticipantEmail("");
   }
 
-  function handleRemoveEmailFromInvites(participantId: string) {
-    alert(`${participantId} removido com sucesso!`);
+  function handleRemoveEmailFromInvites(participantEmail: string) {
+    setInputParticipants((participant) =>
+      participant.filter(
+        (participant) => participant.email !== participantEmail,
+      ),
+    );
   }
 
   function handleConfirmTrip(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    alert("Confirmado com sucesso!");
+
+    const data = new FormData(event.currentTarget);
+    const name = data.get("name") as string;
+    const email = data.get("email") as string;
+
+    if (!email || !name) {
+      return;
+    }
+
+    if (
+      !email.match(
+        /^[a-z]+((_|\-|\.)[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)+$/,
+      )
+    ) {
+      alert("Formato de email inválido");
+      return;
+    }
+
+    setIsConfirmationModalOpen(false);
+    setInputInviterName("");
+    setInputInviterEmail("");
+    const id = 123;
+    navigate(`/trips/${id}`);
   }
 
   return (
@@ -159,7 +219,7 @@ export function TripCreation() {
                   <span className="text-zinc-300">{email}</span>
                   <button
                     type="button"
-                    onClick={() => handleRemoveEmailFromInvites(id)}
+                    onClick={() => handleRemoveEmailFromInvites(email)}
                   >
                     <X className="size-4 text-zinc-400" />
                   </button>
@@ -228,8 +288,8 @@ export function TripCreation() {
                   placeholder="Seu nome completo"
                   type="text"
                   name="name"
-                  value={inputParticipantName}
-                  setValue={setInputParticipantName}
+                  value={inputInviterName}
+                  setValue={setInputInviterName}
                 >
                   <User className="size-5 text-zinc-400" />
                 </Input>
@@ -239,8 +299,8 @@ export function TripCreation() {
                   placeholder="Seu e-mail pessoal"
                   type="email"
                   name="email"
-                  value={inputParticipantEmail}
-                  setValue={setInputParticipantEmail}
+                  value={inputInviterEmail}
+                  setValue={setInputInviterEmail}
                 >
                   <Mail className="size-5 text-zinc-400" />
                 </Input>
