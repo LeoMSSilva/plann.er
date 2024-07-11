@@ -1,9 +1,9 @@
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { CircleCheck, CircleDashed, Link2, Plus } from "lucide-react";
+import { CircleCheck, CircleDashed, Link2, Plus, UserCog } from "lucide-react";
 import { useState } from "react";
-import { Button, InputContainer } from "../../Components";
-import type { IActivity, ILink } from "../../Interfaces";
+import { Button, InputContainer, SeparatorX } from "../../Components";
+import type { IActivity, ILink, IParticipant } from "../../Interfaces";
 import { Header } from "./Components";
 
 export function TripDetails() {
@@ -60,10 +60,34 @@ export function TripDetails() {
     },
   ];
 
+  const mocksParticipants: IParticipant[] = [
+    {
+      id: "1",
+      name: "Teste",
+      email: "teste@teste.teste",
+      is_confirmed: false,
+    },
+    {
+      id: "2",
+      name: "Teste2",
+      email: "teste2@teste.teste",
+      is_confirmed: false,
+    },
+    {
+      id: "3",
+      name: "Teste3",
+      email: "teste3@teste.teste",
+      is_confirmed: true,
+    },
+  ];
+
   const [inputActivities, setInputActivities] =
     useState<IActivity[]>(mocksActivities);
 
   const [inputLinks, setInputLinks] = useState<ILink[]>(mocksLinks);
+
+  const [inputParticipants, setInputParticipants] =
+    useState<IParticipant[]>(mocksParticipants);
 
   return (
     <div className="max-w-6xl px-6 py-10 mx-auto space-y-8">
@@ -157,6 +181,48 @@ export function TripDetails() {
             >
               <Plus className="size-5" />
               Cadastrar novo link
+            </Button>
+          </div>
+          <SeparatorX />
+          <div className="space-y-6">
+            <span className="text-xl font-semibold text-zinc-50">
+              Confirmar participação
+            </span>
+            <div className="space-y-5">
+              {inputParticipants.length > 0 ? (
+                inputParticipants.map((participant) => (
+                  <div
+                    key={participant.id}
+                    className="flex items-center justify-between gap-4"
+                  >
+                    <div className="space-y-1.5 flex-1">
+                      <span className="block font-medium text-zinc-100">
+                        {participant.name}
+                      </span>
+                      <a
+                        href={participant.email}
+                        className="block text-zinc-400 hover:text-zinc-200  truncate"
+                      >
+                        {participant.email}
+                      </a>
+                    </div>
+                    {participant.is_confirmed ? (
+                      <CircleCheck className="size-5 text-lime-300" />
+                    ) : (
+                      <CircleDashed className="size-5 text-zinc-400" />
+                    )}
+                  </div>
+                ))
+              ) : (
+                <>Nenhum participante cadastrado!</>
+              )}
+            </div>
+            <Button
+              size="full"
+              variant="secondary"
+            >
+              <UserCog className="size-5" />
+              Gerenciar convidados
             </Button>
           </div>
         </div>
