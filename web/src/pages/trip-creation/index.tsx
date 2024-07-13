@@ -76,6 +76,18 @@ export function TripCreation() {
     setIsConfirmationModalOpen(state);
   }
 
+  function emailFormatValidation(email: string) {
+    if (
+      !email.match(
+        /^[a-z][a-zA-Z0-9]*((_|\-|\.)[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)+$/,
+      )
+    ) {
+      alert("Formato de email inválido");
+      return false;
+    }
+    return true;
+  }
+
   function handleAddNewEmailToInvite(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -88,19 +100,12 @@ export function TripCreation() {
       return;
     }
 
+    if (!emailFormatValidation(email)) return;
+
     if (
       inputParticipants.map((participant) => participant.email).includes(email)
     ) {
       alert("Este email ja foi adicionado");
-      return;
-    }
-
-    if (
-      !email.match(
-        /^[a-z]+((_|\-|\.)[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)+$/,
-      )
-    ) {
-      alert("Formato de email inválido");
       return;
     }
 
@@ -110,6 +115,7 @@ export function TripCreation() {
       email,
       is_confirmed: false,
     };
+
     setInputParticipants((participant) => [...participant, newParticipant]);
     setInputParticipantName("");
     setInputParticipantEmail("");
@@ -131,21 +137,16 @@ export function TripCreation() {
     const email = data.get("email") as string;
 
     if (!email || !name) {
+      alert("Preencha todos os campos");
       return;
     }
 
-    if (
-      !email.match(
-        /^[a-z]+((_|\-|\.)[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)+$/,
-      )
-    ) {
-      alert("Formato de email inválido");
-      return;
-    }
+    if (!emailFormatValidation(email)) return;
 
     setIsConfirmationModalOpen(false);
     setInputInviterName("");
     setInputInviterEmail("");
+
     const id = 123;
     navigate(`/trips/${id}`);
   }

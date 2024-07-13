@@ -117,7 +117,7 @@ export function TripDetails() {
 
     console.log(url);
 
-    if (!url.match(/^https?:\/\/[a-zA-Z0-9][a-zA-Z0-9_|\-|\.]+$/)) {
+    if (!url.match(/^https?:\/\/[a-zA-Z0-9][a-zA-Z0-9\_\-\.]+$/)) {
       alert("Formato de url inválido");
       return;
     }
@@ -154,7 +154,7 @@ export function TripDetails() {
 
     if (
       !email.match(
-        /^[a-z]+((_|\-|\.)[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)+$/,
+        /^[a-z][a-zA-Z0-9]*((_|\-|\.)[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)+$/,
       )
     ) {
       alert("Formato de email inválido");
