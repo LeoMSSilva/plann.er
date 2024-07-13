@@ -9,3 +9,12 @@
 input {
   color-scheme: dark;
 }
+
+.rdp {
+  margin: 0;
+  --rdp-background-color: rgb(163 230 53);
+}
+
+.rdp-day_selected, .rdp-day_selected:focus-visible, .rdp-day_selected:hover {
+  @apply text-lime-950 bg-lime-300 hover:bg-lime-400
+}

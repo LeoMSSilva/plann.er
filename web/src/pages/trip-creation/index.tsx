@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import {
   ArrowRight,
   AtSign,
@@ -10,6 +11,7 @@ import {
   X,
 } from "lucide-react";
 import { type FormEvent, useState } from "react";
+import { type DateRange, DayPicker } from "react-day-picker";
 import { useNavigate } from "react-router-dom";
 import {
   Button,
@@ -21,12 +23,15 @@ import {
 } from "../../Components";
 import type { IParticipant } from "../../Interfaces";
 import { Footer, Header, Layout } from "./Components";
+import "react-day-picker/dist/style.css";
 
 export function TripCreation() {
   const navigate = useNavigate();
 
   const [inputLocal, setInputLocal] = useState("");
-  const [inputDate, setInputDate] = useState("");
+  const [datePickerRange, setDatePickerRange] = useState<
+    DateRange | undefined
+  >();
 
   const [inputParticipantName, setInputParticipantName] = useState("");
   const [inputParticipantEmail, setInputParticipantEmail] = useState("");
@@ -37,9 +42,27 @@ export function TripCreation() {
   const [inputInviterName, setInputInviterName] = useState("");
   const [inputInviterEmail, setInputInviterEmail] = useState("");
 
+  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
   const [isGuestsInputOpen, setIsGuestsInputOpen] = useState(false);
   const [isGuestModalOpen, setIsGuestModalOpen] = useState(false);
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+
+  const displayDate = datePickerRange && formatDisplayDate(datePickerRange);
+
+  function formatDisplayDate({ from, to }: DateRange) {
+    if (typeof from === "undefined") return "";
+
+    if (typeof to === "undefined") {
+      return format(from, "d' de 'LLL");
+    }
+    return format(from, "d' de 'LLL")
+      .concat(" até ")
+      .concat(format(to, "d' de 'LLL"));
+  }
+
+  function handleToggleIsDatePickerOpen(state: boolean) {
+    setIsDatePickerOpen(state);
+  }
 
   function handleToggleIsGuestsInputOpen(state: boolean) {
     setIsGuestsInputOpen(state);
@@ -140,16 +163,24 @@ export function TripCreation() {
           >
             <MapPin className="size-5 text-zinc-400" />
           </Input>
-          <Input
+
+          <button
             disabled={isGuestsInputOpen}
-            placeholder="Quando?"
-            value={inputDate}
-            setValue={setInputDate}
+            type="button"
+            className="flex items-center gap-2 text-zinc-400"
+            onClick={() => handleToggleIsDatePickerOpen(true)}
           >
             <Calendar className="size-5 text-zinc-400" />
-          </Input>
+            {displayDate ? (
+              <div className="text-zinc-100">{displayDate}</div>
+            ) : (
+              "Quando?"
+            )}
+          </button>
+
           <SeparatorY />
           <Button
+            disabled={!(inputLocal && displayDate)}
             type="button"
             variant={isGuestsInputOpen ? "secondary" : "primary"}
             onClick={() => handleToggleIsGuestsInputOpen(!isGuestsInputOpen)}
@@ -167,6 +198,21 @@ export function TripCreation() {
             )}
           </Button>
         </InputContainer>
+
+        {isDatePickerOpen && (
+          <ModalContainer>
+            <ModalHeaderContainer
+              title="Selecione a data"
+              handleToggle={handleToggleIsDatePickerOpen}
+            >
+              <DayPicker
+                mode="range"
+                selected={datePickerRange}
+                onSelect={setDatePickerRange}
+              />
+            </ModalHeaderContainer>
+          </ModalContainer>
+        )}
 
         {isGuestsInputOpen && (
           <InputContainer>
@@ -275,7 +321,9 @@ export function TripCreation() {
                   {inputLocal}
                 </span>{" "}
                 nas datas de{" "}
-                <span className="text-zinc-100 font-semibold">{inputDate}</span>{" "}
+                <span className="text-zinc-100 font-semibold">
+                  {displayDate}
+                </span>{" "}
                 preencha seus dados abaixo:
               </p>
             </ModalHeaderContainer>
