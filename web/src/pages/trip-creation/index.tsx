@@ -24,6 +24,7 @@ import {
 import type { IParticipant } from "../../Interfaces";
 import { Footer, Header, Layout } from "./Components";
 import "react-day-picker/dist/style.css";
+import { formatValidationEmail } from "../../utils";
 
 export function TripCreation() {
   const navigate = useNavigate();
@@ -76,18 +77,6 @@ export function TripCreation() {
     setIsConfirmationModalOpen(state);
   }
 
-  function emailFormatValidation(email: string) {
-    if (
-      !email.match(
-        /^[a-z][a-zA-Z0-9]*((_|\-|\.)[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)+$/,
-      )
-    ) {
-      alert("Formato de email inválido");
-      return false;
-    }
-    return true;
-  }
-
   function handleAddNewEmailToInvite(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -100,7 +89,7 @@ export function TripCreation() {
       return;
     }
 
-    if (!emailFormatValidation(email)) return;
+    if (!formatValidationEmail(email)) return;
 
     if (
       inputParticipants.map((participant) => participant.email).includes(email)
@@ -141,7 +130,7 @@ export function TripCreation() {
       return;
     }
 
-    if (!emailFormatValidation(email)) return;
+    if (!formatValidationEmail(email)) return;
 
     setIsConfirmationModalOpen(false);
     setInputInviterName("");

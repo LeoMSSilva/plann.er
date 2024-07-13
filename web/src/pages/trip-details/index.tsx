@@ -21,6 +21,7 @@ import {
   SeparatorX,
 } from "../../Components";
 import type { IActivity, ILink, IParticipant } from "../../Interfaces";
+import { formatValidationEmail, formatValidationURL } from "../../utils";
 import { Header } from "./Components";
 
 export function TripDetails() {
@@ -92,6 +93,7 @@ export function TripDetails() {
         },
       ],
     };
+
     setInputActivities((activity) => [...activity, newActivity]);
     setIsActivitiesModalOpen(false);
     setInputActivityTitle("");
@@ -115,18 +117,14 @@ export function TripDetails() {
       return;
     }
 
-    console.log(url);
-
-    if (!url.match(/^https?:\/\/[a-zA-Z0-9][a-zA-Z0-9\_\-\.]+$/)) {
-      alert("Formato de url inválido");
-      return;
-    }
+    if (!formatValidationURL(url)) return;
 
     const newLink: ILink = {
       id: String(inputParticipants.length + 1),
       title,
       url,
     };
+
     setInputLinks((link) => [...link, newLink]);
     setIsLinksModalOpen(false);
     setInputLinkTitle("");
@@ -145,19 +143,12 @@ export function TripDetails() {
       return;
     }
 
+    if (!formatValidationEmail(email)) return;
+
     if (
       inputParticipants.map((participant) => participant.email).includes(email)
     ) {
       alert("Este email ja foi adicionado");
-      return;
-    }
-
-    if (
-      !email.match(
-        /^[a-z][a-zA-Z0-9]*((_|\-|\.)[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)+$/,
-      )
-    ) {
-      alert("Formato de email inválido");
       return;
     }
 
@@ -167,6 +158,7 @@ export function TripDetails() {
       email,
       is_confirmed: false,
     };
+
     setInputParticipants((participant) => [...participant, newParticipant]);
     setIsInviteToTravelModalOpen(false);
     setInputParticipantName("");
