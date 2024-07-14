@@ -9,12 +9,12 @@ import "react-day-picker/dist/style.css";
 interface IDatePickerModalProps {
   datePickerRange: DateRange | undefined;
   setDatePickerRange: (value: DateRange | undefined) => void;
-  isGuestsInputOpen: boolean;
+  isDisabled: boolean;
 }
 export const DatePickerModal = ({
   datePickerRange,
   setDatePickerRange,
-  isGuestsInputOpen,
+  isDisabled,
 }: IDatePickerModalProps) => {
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
 
@@ -25,7 +25,7 @@ export const DatePickerModal = ({
   return (
     <>
       <button
-        disabled={isGuestsInputOpen}
+        disabled={isDisabled}
         type="button"
         className="flex items-center gap-2 text-zinc-400"
         onClick={() => handleToggleIsDatePickerOpen(true)}

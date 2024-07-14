@@ -1,37 +1,37 @@
 import { ArrowRight, MapPin, Settings2 } from "lucide-react";
 import type { DateRange } from "react-day-picker";
-import { DatePickerModal } from "..";
-import {
-  Button,
-  Input,
-  InputContainer,
-  SeparatorY,
-} from "../../../../Components";
+import { Button, Input, InputContainer, SeparatorY } from ".";
+import { DatePickerModal } from "../pages/trip-creation/Components";
 
 interface IDestinationAndDateStepProps {
   datePickerRange: DateRange | undefined;
   setDatePickerRange: (value: DateRange | undefined) => void;
   inputLocal: string;
   setInputLocal: (value: string) => void;
-  isGuestsInputOpen: boolean;
-  setIsGuestsInputOpen: (value: boolean) => void;
+  isEditableLocalAndDate: boolean;
+  setIsEditableLocalAndDate: (value: boolean) => void;
+  handleContinue?: () => void;
 }
 export function DestinationAndDateStep({
   datePickerRange,
   setDatePickerRange,
   inputLocal,
   setInputLocal,
-  isGuestsInputOpen,
-  setIsGuestsInputOpen,
+  isEditableLocalAndDate,
+  setIsEditableLocalAndDate,
+  handleContinue,
 }: IDestinationAndDateStepProps) {
-  function handleToggleIsGuestsInputOpen(state: boolean) {
-    setIsGuestsInputOpen(state);
+  function handleToggleIsEditableLocalAndDate(state: boolean) {
+    setIsEditableLocalAndDate(state);
+    if (isEditableLocalAndDate && handleContinue) {
+      handleContinue();
+    }
   }
 
   return (
     <InputContainer>
       <Input
-        disabled={isGuestsInputOpen}
+        disabled={!isEditableLocalAndDate}
         placeholder="Para onde você vai?"
         value={inputLocal}
         setValue={setInputLocal}
@@ -42,7 +42,7 @@ export function DestinationAndDateStep({
       <DatePickerModal
         datePickerRange={datePickerRange}
         setDatePickerRange={setDatePickerRange}
-        isGuestsInputOpen={isGuestsInputOpen}
+        isDisabled={!isEditableLocalAndDate}
       />
 
       <SeparatorY />
@@ -50,10 +50,12 @@ export function DestinationAndDateStep({
       <Button
         disabled={!(inputLocal && datePickerRange)}
         type="button"
-        variant={isGuestsInputOpen ? "secondary" : "primary"}
-        onClick={() => handleToggleIsGuestsInputOpen(!isGuestsInputOpen)}
+        variant={!isEditableLocalAndDate ? "secondary" : "primary"}
+        onClick={() =>
+          handleToggleIsEditableLocalAndDate(!isEditableLocalAndDate)
+        }
       >
-        {isGuestsInputOpen ? (
+        {!isEditableLocalAndDate ? (
           <>
             Alterar local/data
             <Settings2 className="size-5" />

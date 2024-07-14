@@ -1,4 +1,5 @@
 import { Button } from "./button";
+import { DestinationAndDateStep } from "./destinationAndDateStep";
 import { Input } from "./input";
 import { InputContainer } from "./inputContainer";
 import { ModalContainer } from "./modalContainer";
@@ -8,6 +9,7 @@ import { SeparatorY } from "./separator-y";
 
 export {
   Button,
+  DestinationAndDateStep,
   Input,
   InputContainer,
   ModalContainer,

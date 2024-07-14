@@ -1,10 +1,10 @@
 import { type FormEvent, useState } from "react";
 import type { DateRange } from "react-day-picker";
 import { useNavigate } from "react-router-dom";
+import { DestinationAndDateStep } from "../../Components";
 import type { IParticipant } from "../../Interfaces";
 import { formatPresentationDate, formatValidationEmail } from "../../utils";
 import {
-  DestinationAndDateStep,
   Footer,
   Header,
   InviteGuestsAndConfirmTheTripStep,
@@ -18,7 +18,7 @@ export function TripCreation() {
   >();
   const presentationDate =
     (datePickerRange && formatPresentationDate(datePickerRange)) || "";
-  const [isGuestsInputOpen, setIsGuestsInputOpen] = useState(false);
+  const [isEditableLocalAndDate, setIsEditableLocalAndDate] = useState(true);
 
   const navigate = useNavigate();
 
@@ -99,11 +99,11 @@ export function TripCreation() {
           setDatePickerRange={setDatePickerRange}
           inputLocal={inputLocal}
           setInputLocal={setInputLocal}
-          isGuestsInputOpen={isGuestsInputOpen}
-          setIsGuestsInputOpen={setIsGuestsInputOpen}
+          isEditableLocalAndDate={isEditableLocalAndDate}
+          setIsEditableLocalAndDate={setIsEditableLocalAndDate}
         />
 
-        {isGuestsInputOpen && (
+        {!isEditableLocalAndDate && (
           <InviteGuestsAndConfirmTheTripStep
             displayDate={presentationDate}
             inputLocal={inputLocal}

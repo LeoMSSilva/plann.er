@@ -1,8 +1,8 @@
 import { ArrowRight, UserRoundPlus } from "lucide-react";
 import { type FormEvent, useState } from "react";
-import { ConfirmationButtonModal, SelectGuestsModal } from "..";
-import { Button, InputContainer } from "../../../../Components";
-import type { IParticipant } from "../../../../Interfaces";
+import { ConfirmationButtonModal, SelectGuestsModal } from ".";
+import { Button, InputContainer } from "../../../Components";
+import type { IParticipant } from "../../../Interfaces";
 
 interface IInviteGuestsAndConfirmTheTripStepProps {
   displayDate: string;
