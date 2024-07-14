@@ -23,7 +23,7 @@ import {
   SeparatorY,
 } from "../../Components";
 import type { IParticipant } from "../../Interfaces";
-import { formatValidationEmail } from "../../utils";
+import { formatPresentationDate, formatValidationEmail } from "../../utils";
 import { Footer, Header, Layout } from "./Components";
 import "react-day-picker/dist/style.css";
 
@@ -49,18 +49,8 @@ export function TripCreation() {
   const [isGuestModalOpen, setIsGuestModalOpen] = useState(false);
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 
-  const displayDate = datePickerRange && formatDisplayDate(datePickerRange);
-
-  function formatDisplayDate({ from, to }: DateRange) {
-    if (typeof from === "undefined") return "";
-
-    if (typeof to === "undefined") {
-      return format(from, "d' de 'LLL");
-    }
-    return format(from, "d' de 'LLL")
-      .concat(" até ")
-      .concat(format(to, "d' de 'LLL"));
-  }
+  const displayDate =
+    (datePickerRange && formatPresentationDate(datePickerRange)) || "";
 
   function handleToggleIsDatePickerOpen(state: boolean) {
     setIsDatePickerOpen(state);

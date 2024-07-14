@@ -1,3 +1,4 @@
+import { formatPresentationDate } from "./formatDate";
 import { formatValidationEmail, formatValidationURL } from "./formatValidation";
 
-export { formatValidationEmail, formatValidationURL };
+export { formatPresentationDate, formatValidationEmail, formatValidationURL };
