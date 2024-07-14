@@ -1,22 +1,37 @@
 import { type FormEvent, useState } from "react";
-import { SeparatorX } from "../../Components";
+import type { DateRange } from "react-day-picker";
+import { DestinationAndDateStep, SeparatorX } from "../../Components";
 import type { IActivity, ILink, IParticipant } from "../../Interfaces";
-import { formatValidationEmail, formatValidationURL } from "../../utils";
+import {
+  formatPresentationDate,
+  formatValidationEmail,
+  formatValidationURL,
+} from "../../utils";
 import {
   ActivityList,
-  Header,
   ImportantLinksList,
   InviteToTravelList,
 } from "./Components";
 
 export function TripDetails() {
-  const inputLocal = "Brasil";
-  const inputDate = "hoje";
+  const [inputLocal, setInputLocal] = useState("");
+  const [datePickerRange, setDatePickerRange] = useState<
+    DateRange | undefined
+  >();
+  const [isEditableLocalAndDate, setIsEditableLocalAndDate] = useState(false);
+
   const [inputActivities, setInputActivities] = useState<IActivity[]>([]);
   const [inputLinks, setInputLinks] = useState<ILink[]>([]);
   const [inputParticipants, setInputParticipants] = useState<IParticipant[]>(
     [],
   );
+
+  const presentationDate =
+    (datePickerRange && formatPresentationDate(datePickerRange)) || "";
+
+  function handleContinue() {
+    alert("Salvei atualização do local e data.");
+  }
 
   function handleActivityModal(event: FormEvent<HTMLFormElement>): boolean {
     event.preventDefault();
@@ -124,9 +139,14 @@ export function TripDetails() {
 
   return (
     <div className="max-w-6xl px-6 py-10 mx-auto space-y-8">
-      <Header
-        date={inputDate}
-        local={inputLocal}
+      <DestinationAndDateStep
+        inputLocal={inputLocal}
+        setInputLocal={setInputLocal}
+        datePickerRange={datePickerRange}
+        setDatePickerRange={setDatePickerRange}
+        isEditableLocalAndDate={isEditableLocalAndDate}
+        setIsEditableLocalAndDate={setIsEditableLocalAndDate}
+        handleContinue={handleContinue}
       />
       <main className="flex gap-16 px-6">
         <ActivityList
@@ -144,7 +164,7 @@ export function TripDetails() {
 
           <InviteToTravelList
             inputParticipants={inputParticipants}
-            inputDate={inputDate}
+            inputDate={presentationDate}
             inputLocal={inputLocal}
             handleInviteToTravelModal={handleInviteToTravelModal}
           />
