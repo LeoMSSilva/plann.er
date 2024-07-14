@@ -1,10 +1,13 @@
-import { format } from "date-fns";
-import { ptBR } from "date-fns/locale";
 import { CircleCheck, CircleDashed, Plus } from "lucide-react";
 import { type FormEvent, useState } from "react";
 import { ActivityModal } from ".";
 import { Button, InputContainer } from "../../../Components";
 import type { IActivity } from "../../../Interfaces";
+import {
+  formatPresentationDay,
+  formatPresentationTime,
+  formatPresentationWeekDay,
+} from "../../../utils";
 
 interface IActivityListProps {
   inputActivities: IActivity[];
@@ -40,10 +43,10 @@ export const ActivityList = ({
             >
               <div className="flex gap-2 items-baseline">
                 <span className="text-xl font-semibold text-zinc-300">
-                  Dia {format(category.date, "d")}
+                  {formatPresentationDay(category.date)}
                 </span>
                 <span className="text-xs text-zinc-500">
-                  {format(category.date, "EEEE", { locale: ptBR })}
+                  {formatPresentationWeekDay(category.date)}
                 </span>
               </div>
               {category.activities.length > 0 ? (
@@ -57,7 +60,7 @@ export const ActivityList = ({
                       )}
                       <span className="text-zinc-100">{activity.title}</span>
                       <span className="ml-auto text-zinc-400">
-                        {format(activity.occurs_at, "HH:mm")}h
+                        {formatPresentationTime(activity.occurs_at)}
                       </span>
                     </InputContainer>
                   ))}

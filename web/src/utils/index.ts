@@ -1,4 +1,16 @@
-import { formatPresentationDate } from "./formatDate";
+import {
+  formatPresentationDate,
+  formatPresentationDay,
+  formatPresentationTime,
+  formatPresentationWeekDay,
+} from "./formatDate";
 import { formatValidationEmail, formatValidationURL } from "./formatValidation";
 
-export { formatPresentationDate, formatValidationEmail, formatValidationURL };
+export {
+  formatPresentationDate,
+  formatPresentationDay,
+  formatValidationEmail,
+  formatPresentationTime,
+  formatValidationURL,
+  formatPresentationWeekDay,
+};
