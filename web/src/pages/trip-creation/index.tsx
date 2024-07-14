@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
 import {
   ArrowRight,
   AtSign,
@@ -22,9 +23,9 @@ import {
   SeparatorY,
 } from "../../Components";
 import type { IParticipant } from "../../Interfaces";
+import { formatValidationEmail } from "../../utils";
 import { Footer, Header, Layout } from "./Components";
 import "react-day-picker/dist/style.css";
-import { formatValidationEmail } from "../../utils";
 
 export function TripCreation() {
   const navigate = useNavigate();
@@ -190,12 +191,13 @@ export function TripCreation() {
         </InputContainer>
 
         {isDatePickerOpen && (
-          <ModalContainer>
+          <ModalContainer size="fit">
             <ModalHeaderContainer
               title="Selecione a data"
               handleToggle={handleToggleIsDatePickerOpen}
             >
               <DayPicker
+                locale={ptBR}
                 mode="range"
                 selected={datePickerRange}
                 onSelect={setDatePickerRange}
