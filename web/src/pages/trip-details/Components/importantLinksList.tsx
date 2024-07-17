@@ -6,7 +6,9 @@ import type { ILink } from "../../../Interfaces";
 
 interface IImportantLinksListProps {
   inputLinks: ILink[];
-  handleCreateLinkModal: (value: FormEvent<HTMLFormElement>) => boolean;
+  handleCreateLinkModal: (
+    value: FormEvent<HTMLFormElement>,
+  ) => Promise<boolean>;
 }
 
 export const ImportantLinksList = ({

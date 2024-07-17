@@ -8,7 +8,9 @@ interface IInviteToTravelListProps {
   inputLocal: string;
   inputDate: string;
   inputParticipants: IParticipant[];
-  handleInviteToTravelModal: (value: FormEvent<HTMLFormElement>) => boolean;
+  handleInviteToTravelModal: (
+    value: FormEvent<HTMLFormElement>,
+  ) => Promise<boolean>;
 }
 export const InviteToTravelList = ({
   inputLocal,

@@ -12,7 +12,9 @@ interface IInviteToTravelModalProps {
   inputLocal: string;
   inputDate: string;
   handleToggleInviteToTravelModal: (value: boolean) => void;
-  handleInviteToTravelModal: (value: FormEvent<HTMLFormElement>) => boolean;
+  handleInviteToTravelModal: (
+    value: FormEvent<HTMLFormElement>,
+  ) => Promise<boolean>;
 }
 
 export const InviteToTravelModal = ({
@@ -30,8 +32,8 @@ export const InviteToTravelModal = ({
     handleToggleInviteToTravelModal(false);
   }
 
-  function onSubmit(event: FormEvent<HTMLFormElement>) {
-    const isSuccess = handleInviteToTravelModal(event);
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
+    const isSuccess = await handleInviteToTravelModal(event);
     isSuccess && clearFields();
   }
 

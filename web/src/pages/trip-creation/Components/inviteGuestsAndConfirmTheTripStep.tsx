@@ -8,11 +8,7 @@ interface IInviteGuestsAndConfirmTheTripStepProps {
   displayDate: string;
   inputLocal: string;
   inputParticipants: IParticipant[];
-  inputParticipantName: string;
-  setInputParticipantName: (value: string) => void;
-  inputParticipantEmail: string;
-  setInputParticipantEmail: (value: string) => void;
-  handleAddNewEmailToInvite: (value: FormEvent<HTMLFormElement>) => void;
+  handleAddNewEmailToInvite: (value: FormEvent<HTMLFormElement>) => boolean;
   handleRemoveEmailFromInvites: (value: string) => void;
   inputInviterName: string;
   setInputInviterName: (value: string) => void;
@@ -25,10 +21,6 @@ export function InviteGuestsAndConfirmTheTripStep({
   displayDate,
   inputLocal,
   inputParticipants,
-  inputParticipantName,
-  setInputParticipantName,
-  inputParticipantEmail,
-  setInputParticipantEmail,
   handleAddNewEmailToInvite,
   handleRemoveEmailFromInvites,
   inputInviterName,
@@ -71,10 +63,6 @@ export function InviteGuestsAndConfirmTheTripStep({
         <SelectGuestsModal
           inputParticipants={inputParticipants}
           handleToggleGuestModalOpen={handleToggleGuestModalOpen}
-          inputParticipantName={inputParticipantName}
-          setInputParticipantName={setInputParticipantName}
-          inputParticipantEmail={inputParticipantEmail}
-          setInputParticipantEmail={setInputParticipantEmail}
           handleAddNewEmailToInvite={handleAddNewEmailToInvite}
           handleRemoveEmailFromInvites={handleRemoveEmailFromInvites}
         />

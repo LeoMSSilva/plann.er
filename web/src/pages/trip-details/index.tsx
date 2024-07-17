@@ -1,7 +1,9 @@
-import { type FormEvent, useState } from "react";
+import { type FormEvent, useCallback, useEffect, useState } from "react";
 import type { DateRange } from "react-day-picker";
+import { useParams } from "react-router-dom";
 import { DestinationAndDateStep, SeparatorX } from "../../Components";
 import type { IActivity, ILink, IParticipant } from "../../Interfaces";
+import { api } from "../../lib/api";
 import {
   formatPresentationDate,
   formatValidationEmail,
@@ -29,11 +31,22 @@ export function TripDetails() {
   const presentationDate =
     (datePickerRange && formatPresentationDate(datePickerRange)) || "";
 
-  function handleContinue() {
-    alert("Salvei atualização do local e data.");
+  async function handleContinue() {
+    if (!inputLocal || !datePickerRange?.from) return;
+
+    await api.put(`/trips/${tripId}`, {
+      destination: inputLocal,
+      starts_at: datePickerRange.from.toString(),
+      ends_at: datePickerRange.to
+        ? datePickerRange.to.toString()
+        : datePickerRange.from.toString(),
+    });
+    requestActivities();
   }
 
-  function handleActivityModal(event: FormEvent<HTMLFormElement>): boolean {
+  async function handleActivityModal(
+    event: FormEvent<HTMLFormElement>,
+  ): Promise<boolean> {
     event.preventDefault();
 
     const data = new FormData(event.currentTarget);
@@ -57,22 +70,31 @@ export function TripDetails() {
       return false;
     }
 
-    const newActivity: IActivity = {
-      date: new Date().toString(),
-      activities: [
-        {
-          id: String(inputActivities.length + 1),
-          title,
-          occurs_at,
-        },
-      ],
-    };
+    // const newActivity: IActivity = {
+    //   date: occurs_at,
+    //   activities: [
+    //     {
+    //       id: String(inputActivities.length + 1),
+    //       title,
+    //       occurs_at,
+    //     },
+    //   ],
+    // };
 
-    setInputActivities([...inputActivities, newActivity]);
+    // setInputActivities([...inputActivities, newActivity]);
+
+    const response = await api.post(`trips/${tripId}/activities`, {
+      title,
+      occurs_at,
+    });
+    console.log(response);
+    await requestActivities();
     return true;
   }
 
-  function handleCreateLinkModal(event: FormEvent<HTMLFormElement>): boolean {
+  async function handleCreateLinkModal(
+    event: FormEvent<HTMLFormElement>,
+  ): Promise<boolean> {
     event.preventDefault();
 
     const data = new FormData(event.currentTarget);
@@ -99,12 +121,14 @@ export function TripDetails() {
 
     setInputLinks([...inputLinks, newLink]);
 
+    await api.post(`trips/${tripId}/links`, newLink);
+
     return true;
   }
 
-  function handleInviteToTravelModal(
+  async function handleInviteToTravelModal(
     event: FormEvent<HTMLFormElement>,
-  ): boolean {
+  ): Promise<boolean> {
     event.preventDefault();
 
     const data = new FormData(event.currentTarget);
@@ -132,10 +156,56 @@ export function TripDetails() {
       is_confirmed: false,
     };
 
-    setInputParticipants((participant) => [...participant, newParticipant]);
+    setInputParticipants([...inputParticipants, newParticipant]);
+
+    await api.post(`trips/${tripId}/invites`, newParticipant);
 
     return true;
   }
+
+  const { tripId } = useParams();
+
+  const requestLocalAndDate = useCallback(() => {
+    api.get(`trips/${tripId}`).then((response) => {
+      setInputLocal(response.data.trip.destination);
+      setDatePickerRange({
+        from: new Date(response.data.trip.starts_at),
+        to: new Date(response.data.trip.ends_at),
+      });
+    });
+  }, [tripId]);
+
+  const requestActivities = useCallback(() => {
+    api.get(`trips/${tripId}/activities`).then((response) => {
+      console.log(response.data.activities);
+
+      setInputActivities(response.data.activities);
+    });
+  }, [tripId]);
+
+  const requestLinks = useCallback(() => {
+    api.get(`trips/${tripId}/links`).then((response) => {
+      setInputLinks(response.data.links);
+    });
+  }, [tripId]);
+
+  const requestParticipants = useCallback(() => {
+    api.get(`trips/${tripId}/participants`).then((response) => {
+      setInputParticipants(response.data.participants);
+    });
+  }, [tripId]);
+
+  useEffect(() => {
+    requestLocalAndDate();
+    requestActivities();
+    requestLinks();
+    requestParticipants();
+  }, [
+    requestLocalAndDate,
+    requestActivities,
+    requestLinks,
+    requestParticipants,
+  ]);
 
   return (
     <div className="max-w-6xl px-6 py-10 mx-auto space-y-8">

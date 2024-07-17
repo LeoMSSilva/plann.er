@@ -10,7 +10,9 @@ import {
 
 interface IImportantLinksModalProps {
   handleToggleCreateLinksModal: (value: boolean) => void;
-  handleCreateLinkModal: (value: FormEvent<HTMLFormElement>) => boolean;
+  handleCreateLinkModal: (
+    value: FormEvent<HTMLFormElement>,
+  ) => Promise<boolean>;
 }
 
 export const ImportantLinksModal = ({
@@ -26,8 +28,8 @@ export const ImportantLinksModal = ({
     handleToggleCreateLinksModal(false);
   }
 
-  function onSubmit(event: FormEvent<HTMLFormElement>) {
-    const isSuccess = handleCreateLinkModal(event);
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
+    const isSuccess = await handleCreateLinkModal(event);
     isSuccess && clearFields();
   }
 

@@ -10,7 +10,7 @@ import {
 
 interface IActivityModalProps {
   handleToggleCreateActivitiesModal: (value: boolean) => void;
-  handleActivityModal: (value: FormEvent<HTMLFormElement>) => boolean;
+  handleActivityModal: (value: FormEvent<HTMLFormElement>) => Promise<boolean>;
 }
 
 export const ActivityModal = ({
@@ -26,8 +26,8 @@ export const ActivityModal = ({
     handleToggleCreateActivitiesModal(false);
   }
 
-  function onSubmit(event: FormEvent<HTMLFormElement>) {
-    const isSuccess = handleActivityModal(event);
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
+    const isSuccess = await handleActivityModal(event);
     isSuccess && clearFields();
   }
 

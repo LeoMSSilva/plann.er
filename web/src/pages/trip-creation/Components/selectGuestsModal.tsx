@@ -1,5 +1,5 @@
 import { AtSign, User, X } from "lucide-react";
-import type { FormEvent } from "react";
+import { type FormEvent, useState } from "react";
 import {
   Button,
   Input,
@@ -12,24 +12,30 @@ import type { IParticipant } from "../../../Interfaces";
 interface ISelectGuestsModalProps {
   inputParticipants: IParticipant[];
   handleToggleGuestModalOpen: (value: boolean) => void;
-  inputParticipantName: string;
-  setInputParticipantName: (value: string) => void;
-  inputParticipantEmail: string;
-  setInputParticipantEmail: (value: string) => void;
-  handleAddNewEmailToInvite: (event: FormEvent<HTMLFormElement>) => void;
+  handleAddNewEmailToInvite: (event: FormEvent<HTMLFormElement>) => boolean;
   handleRemoveEmailFromInvites: (value: string) => void;
 }
 
 export const SelectGuestsModal = ({
   inputParticipants,
   handleToggleGuestModalOpen,
-  inputParticipantName,
-  setInputParticipantName,
-  inputParticipantEmail,
-  setInputParticipantEmail,
   handleRemoveEmailFromInvites,
   handleAddNewEmailToInvite,
 }: ISelectGuestsModalProps) => {
+  const [inputParticipantName, setInputParticipantName] = useState("");
+  const [inputParticipantEmail, setInputParticipantEmail] = useState("");
+
+  function clearFields() {
+    setInputParticipantName("");
+    setInputParticipantEmail("");
+    handleToggleGuestModalOpen(false);
+  }
+
+  function onSubmit(event: FormEvent<HTMLFormElement>) {
+    const isSuccess = handleAddNewEmailToInvite(event);
+    isSuccess && clearFields();
+  }
+
   return (
     <ModalContainer>
       <ModalHeaderContainer
@@ -60,7 +66,7 @@ export const SelectGuestsModal = ({
       </div>
 
       <form
-        onSubmit={handleAddNewEmailToInvite}
+        onSubmit={onSubmit}
         className="space-y-4 w-full"
       >
         <InputContainer variant="secondary">

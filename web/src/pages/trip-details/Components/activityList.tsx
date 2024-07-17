@@ -11,7 +11,7 @@ import {
 
 interface IActivityListProps {
   inputActivities: IActivity[];
-  handleActivityModal: (value: FormEvent<HTMLFormElement>) => boolean;
+  handleActivityModal: (value: FormEvent<HTMLFormElement>) => Promise<boolean>;
 }
 
 export const ActivityList = ({
