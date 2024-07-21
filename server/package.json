@@ -1,0 +1,20 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "author": "LeoMSSilva (https://github.com/LeoMSSilva)",
+  "license": "MIT",
+  "scripts": {
+    "dev": "tsx watch .",
+    "build": "tsup ./index.ts --minify"
+  },
+  "dependencies": {
+    "fastify": "^4.28.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.11",
+    "tsup": "^8.2.1",
+    "tsx": "^4.16.2",
+    "typescript": "^5.5.3"
+  }
+}
