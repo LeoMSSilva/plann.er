@@ -9,6 +9,7 @@
     "build": "tsup ./index.ts --minify"
   },
   "dependencies": {
+    "@prisma/client": "^5.17.0",
     "fastify": "^4.28.1"
   },
   "devDependencies": {
