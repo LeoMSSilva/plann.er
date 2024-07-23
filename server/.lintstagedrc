@@ -1,0 +1,5 @@
+{
+  "*.[jt]s?(x)": [
+    "biome check --write ."
+  ]
+}

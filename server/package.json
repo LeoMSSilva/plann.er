@@ -7,7 +7,8 @@
   "scripts": {
     "build": "tsup ./index.ts --minify",
     "dev": "tsx watch .",
-    "lint": "yarn biome check --write ."
+    "lint": "yarn biome check --write .",
+    "lint-staged": "lint-staged"
   },
   "dependencies": {
     "@prisma/client": "^5.17.0",
@@ -16,6 +17,7 @@
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
     "@types/node": "^20.14.11",
+    "lint-staged": "^15.2.7",
     "prisma": "^5.17.0",
     "tsup": "^8.2.1",
     "tsx": "^4.16.2",
