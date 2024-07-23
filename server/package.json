@@ -8,7 +8,11 @@
     "build": "tsup ./index.ts --minify",
     "dev": "tsx watch .",
     "lint": "yarn biome check --write .",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "prepare": "cd .. && husky web/.husky && echo 'echo \"Husky pre-commit started!\\\\n\"\nnpx lint-staged\necho \"\\\\nHusky pre-commit finished!\\\\n\"' > web/.husky/pre-commit"
+  },
+  "lint-staged": {
+    "*": "yarn lint-staged"
   },
   "dependencies": {
     "@prisma/client": "^5.17.0",
@@ -17,6 +21,7 @@
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
     "@types/node": "^20.14.11",
+    "husky": "^9.1.1",
     "lint-staged": "^15.2.7",
     "prisma": "^5.17.0",
     "tsup": "^8.2.1",
