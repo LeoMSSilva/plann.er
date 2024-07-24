@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsup ./index.ts --minify",
+    "clean": "rm -rf node_modules dist yarn.lock && yarn",
     "dev": "tsx watch .",
     "lint": "yarn biome check --write .",
     "lint-staged": "lint-staged",
