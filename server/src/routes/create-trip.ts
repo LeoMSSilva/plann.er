@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import type { FastifyInstance } from "fastify";
 import type { ZodTypeProvider } from "fastify-type-provider-zod";
 import { z } from "zod";
@@ -32,6 +33,18 @@ export async function createTrip(app: FastifyInstance) {
         owner_email,
         participants,
       } = request.body;
+
+      if (dayjs(starts_at).isBefore(new Date())) {
+        throw new Error(
+          "Invalid trip start date. It cannot be less than today.",
+        );
+      }
+
+      if (dayjs(ends_at).isBefore(starts_at)) {
+        throw new Error(
+          "Invalid trip end date. It cannot be smaller than the initial.",
+        );
+      }
 
       const trip = await prisma.trip.create({
         data: {
