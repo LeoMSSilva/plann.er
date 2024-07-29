@@ -1,7 +1,8 @@
-import dayjs from "dayjs";
 import type { FastifyInstance } from "fastify";
 import type { ZodTypeProvider } from "fastify-type-provider-zod";
 import { z } from "zod";
+import { dayjs } from "../lib/dayjs";
+import { sendMail } from "../lib/mail";
 import { prisma } from "../lib/prisma";
 
 export async function createTrip(app: FastifyInstance) {
@@ -67,6 +68,15 @@ export async function createTrip(app: FastifyInstance) {
             },
           },
         },
+      });
+
+      await sendMail({
+        to: {
+          name: owner_name,
+          address: owner_email,
+        },
+        subject: `Confirme sua viagem para ${destination}`,
+        html: "teste",
       });
 
       return { tripId: trip.id };
