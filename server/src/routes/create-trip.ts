@@ -1,9 +1,10 @@
 import type { FastifyInstance } from "fastify";
 import type { ZodTypeProvider } from "fastify-type-provider-zod";
 import { z } from "zod";
-import { dayjs } from "../lib/dayjs";
+import { dayjs, formattedDate } from "../lib/dayjs";
 import { sendMail } from "../lib/mail";
 import { prisma } from "../lib/prisma";
+import { mailCreateTrip } from "../templates/mail-create-trip";
 
 export async function createTrip(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
@@ -76,7 +77,13 @@ export async function createTrip(app: FastifyInstance) {
           address: owner_email,
         },
         subject: `Confirme sua viagem para ${destination}`,
-        html: "teste",
+        html: mailCreateTrip({
+          owner_name: owner_name,
+          formattedStartDate: formattedDate(starts_at),
+          formattedEndDate: formattedDate(ends_at),
+          destination: destination,
+          confirmationLink: `${process.env.API_BASE_URL}/trips/${trip.id}/confirm`,
+        }),
       });
 
       return { tripId: trip.id };
