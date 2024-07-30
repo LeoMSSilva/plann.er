@@ -51,7 +51,7 @@ export async function createTrip(app: FastifyInstance) {
           destination,
           starts_at,
           ends_at,
-          participant: {
+          participants: {
             createMany: {
               data: [
                 {
