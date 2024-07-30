@@ -1,3 +1,4 @@
+import { mailConfirmTrip } from "./mail-confirm-trip";
 import { mailCreateTrip } from "./mail-create-trip";
 
-export { mailCreateTrip };
+export { mailConfirmTrip, mailCreateTrip };
