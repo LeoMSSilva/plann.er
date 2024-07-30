@@ -1,4 +1,5 @@
+import { confirmParticipant } from "./confirm-participant";
 import { confirmTrip } from "./confirm-trip";
 import { createTrip } from "./create-trip";
 
-export { confirmTrip, createTrip };
+export { confirmParticipant, confirmTrip, createTrip };
