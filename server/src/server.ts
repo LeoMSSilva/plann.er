@@ -7,6 +7,7 @@ import {
   confirmParticipant,
   confirmTrip,
   createActivity,
+  createLink,
   createTrip,
   getActivities,
 } from "./routes";
@@ -19,6 +20,7 @@ app.setSerializerCompiler(serializerCompiler);
 app.register(confirmParticipant);
 app.register(confirmTrip);
 app.register(createActivity);
+app.register(createLink);
 app.register(createTrip);
 app.register(getActivities);
 
