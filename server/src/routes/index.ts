@@ -4,6 +4,7 @@ import { createActivity } from "./create-activity";
 import { createLink } from "./create-link";
 import { createTrip } from "./create-trip";
 import { getActivities } from "./get-activities";
+import { getLinks } from "./get-links";
 
 export {
   confirmParticipant,
@@ -12,4 +13,5 @@ export {
   createLink,
   createTrip,
   getActivities,
+  getLinks,
 };

@@ -10,6 +10,7 @@ import {
   createLink,
   createTrip,
   getActivities,
+  getLinks,
 } from "./routes";
 
 export const app = fastify();
@@ -23,5 +24,6 @@ app.register(createActivity);
 app.register(createLink);
 app.register(createTrip);
 app.register(getActivities);
+app.register(getLinks);
 
 app.get("/", () => "Hello world!");
