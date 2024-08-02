@@ -7,6 +7,7 @@ import { createTrip } from "./create-trip";
 import { getActivities } from "./get-activities";
 import { getLinks } from "./get-links";
 import { getParticipants } from "./get-participants";
+import { getTrip } from "./get-trip";
 import { updateTrip } from "./update-trip";
 
 export {
@@ -18,6 +19,7 @@ export {
   createTrip,
   getActivities,
   getLinks,
+  getTrip,
   getParticipants,
   updateTrip,
 };

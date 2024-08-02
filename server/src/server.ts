@@ -13,6 +13,7 @@ import {
   getActivities,
   getLinks,
   getParticipants,
+  getTrip,
   updateTrip,
 } from "./routes";
 
@@ -29,6 +30,7 @@ app.register(createParticipantsInvite);
 app.register(createTrip);
 app.register(getActivities);
 app.register(getLinks);
+app.register(getTrip);
 app.register(getParticipants);
 app.register(updateTrip);
 
