@@ -12,6 +12,7 @@ import {
   createTrip,
   getActivities,
   getLinks,
+  getParticipant,
   getParticipants,
   getTrip,
   updateTrip,
@@ -31,6 +32,7 @@ app.register(createTrip);
 app.register(getActivities);
 app.register(getLinks);
 app.register(getTrip);
+app.register(getParticipant);
 app.register(getParticipants);
 app.register(updateTrip);
 
