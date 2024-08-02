@@ -8,6 +8,7 @@ import {
   confirmTrip,
   createActivity,
   createLink,
+  createParticipantsInvite,
   createTrip,
   getActivities,
   getLinks,
@@ -23,6 +24,7 @@ app.register(confirmParticipant);
 app.register(confirmTrip);
 app.register(createActivity);
 app.register(createLink);
+app.register(createParticipantsInvite);
 app.register(createTrip);
 app.register(getActivities);
 app.register(getLinks);
