@@ -51,7 +51,7 @@ export async function updateTrip(app: FastifyInstance) {
         );
       }
 
-      await prisma.trip.update({
+      const tripUpdated = await prisma.trip.update({
         where: {
           id: tripId,
         },
@@ -69,12 +69,12 @@ export async function updateTrip(app: FastifyInstance) {
               name: participant.name,
               address: participant.email,
             },
-            subject: `Confirme sua participação na viagem para ${trip.destination}`,
+            subject: `Confirme sua participação na viagem para ${tripUpdated.destination}`,
             html: mailConfirmUpdateTrip({
               participantName: participant.name,
-              formattedStartDate: formattedDate(trip.starts_at),
-              formattedEndDate: formattedDate(trip.ends_at),
-              destination: trip.destination,
+              formattedStartDate: formattedDate(tripUpdated.starts_at),
+              formattedEndDate: formattedDate(tripUpdated.ends_at),
+              destination: tripUpdated.destination,
               confirmationLink: `${env.API_BASE_URL}/participants/${participant.id}/confirm`,
               isConfirmed: participant.is_confirmed,
             }),
