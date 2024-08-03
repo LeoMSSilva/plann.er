@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsup ./index.ts --minify",
     "clean": "rm -rf node_modules dist yarn.lock && yarn",
-    "dev": "tsx watch .",
+    "dev": "tsx watch --env-file .env . ",
     "lint": "yarn biome check --write .",
     "lint-staged": "lint-staged",
     "prepare": "cd .. && husky web/.husky && echo 'echo \"Husky pre-commit started!\\\\n\"\nnpx lint-staged\necho \"\\\\nHusky pre-commit finished!\\\\n\"' > web/.husky/pre-commit"

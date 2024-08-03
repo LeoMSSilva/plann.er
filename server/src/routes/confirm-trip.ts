@@ -1,6 +1,7 @@
 import type { FastifyInstance } from "fastify";
 import type { ZodTypeProvider } from "fastify-type-provider-zod";
 import { z } from "zod";
+import { env } from "../env";
 import { formattedDate, prisma, sendMail } from "../lib";
 import { mailConfirmTrip } from "../templates";
 
@@ -34,7 +35,7 @@ export async function confirmTrip(app: FastifyInstance) {
       }
 
       if (trip.is_confirmed) {
-        return replay.redirect(`${process.env.WEB_BASE_URL}/trips/${tripId}`);
+        return replay.redirect(`${env.WEB_BASE_URL}/trips/${tripId}`);
       }
 
       await prisma.trip.update({
@@ -55,13 +56,13 @@ export async function confirmTrip(app: FastifyInstance) {
               formattedStartDate: formattedDate(trip.starts_at),
               formattedEndDate: formattedDate(trip.ends_at),
               destination: trip.destination,
-              confirmationLink: `${process.env.API_BASE_URL}/participants/${participant.id}/confirm`,
+              confirmationLink: `${env.API_BASE_URL}/participants/${participant.id}/confirm`,
             }),
           });
         }),
       );
 
-      return replay.redirect(`${process.env.WEB_BASE_URL}/trips/${tripId}`);
+      return replay.redirect(`${env.WEB_BASE_URL}/trips/${tripId}`);
     },
   );
 }

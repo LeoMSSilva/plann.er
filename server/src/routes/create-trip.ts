@@ -1,6 +1,7 @@
 import type { FastifyInstance } from "fastify";
 import type { ZodTypeProvider } from "fastify-type-provider-zod";
 import { z } from "zod";
+import { env } from "../env";
 import { dayjs, formattedDate, prisma, sendMail } from "../lib";
 import { mailCreateTrip } from "../templates";
 
@@ -80,7 +81,7 @@ export async function createTrip(app: FastifyInstance) {
           formattedStartDate: formattedDate(starts_at),
           formattedEndDate: formattedDate(ends_at),
           destination: destination,
-          confirmationLink: `${process.env.API_BASE_URL}/trips/${trip.id}/confirm`,
+          confirmationLink: `${env.API_BASE_URL}/trips/${trip.id}/confirm`,
         }),
       });
 
