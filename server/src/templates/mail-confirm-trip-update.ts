@@ -32,8 +32,8 @@ export const mailConfirmUpdateTrip = ({
         <strong style="color: #a1a1aa">${formattedEndDate}</strong>.
       </p>
       ${
-        !isConfirmed &&
-        ` <p style="font-size: 18px">
+        !isConfirmed
+          ? ` <p style="font-size: 18px">
         Para confirmar sua presença, clique no link abaixo:
         </p>
         <br>
@@ -42,6 +42,7 @@ export const mailConfirmUpdateTrip = ({
         Confirmar presença
         </a>
         </p>`
+          : ""
       }
       <br>
       <br>
