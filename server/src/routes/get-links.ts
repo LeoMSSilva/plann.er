@@ -20,10 +20,14 @@ export async function getLinks(app: FastifyInstance) {
         where: { id: tripId },
         include: {
           links: {
-            orderBy: {
-              title: "asc",
-              url: "asc",
-            },
+            orderBy: [
+              {
+                title: "asc",
+              },
+              {
+                url: "asc",
+              },
+            ],
           },
         },
       });

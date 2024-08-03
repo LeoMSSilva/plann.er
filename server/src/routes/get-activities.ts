@@ -20,10 +20,14 @@ export async function getActivities(app: FastifyInstance) {
         where: { id: tripId },
         include: {
           activities: {
-            orderBy: {
-              occurs_at: "asc",
-              title: "asc",
-            },
+            orderBy: [
+              {
+                occurs_at: "asc",
+              },
+              {
+                title: "asc",
+              },
+            ],
           },
         },
       });
