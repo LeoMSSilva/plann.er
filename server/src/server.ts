@@ -39,4 +39,4 @@ app.register(getParticipant);
 app.register(getParticipants);
 app.register(updateTrip);
 
-app.get("/", () => "Hello world!");
+app.get("/", () => "Hello Plann.er!");
