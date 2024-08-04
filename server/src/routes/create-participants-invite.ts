@@ -2,6 +2,7 @@ import type { FastifyInstance } from "fastify";
 import type { ZodTypeProvider } from "fastify-type-provider-zod";
 import { z } from "zod";
 import { env } from "../env";
+import { ClientError } from "../errors";
 import { formattedDate, prisma, sendMail } from "../lib";
 import { mailConfirmTrip } from "../templates";
 
@@ -29,7 +30,7 @@ export async function createParticipantsInvite(app: FastifyInstance) {
       });
 
       if (!trip) {
-        throw new Error("Trip not found.");
+        throw new ClientError("Trip not found.");
       }
 
       const participant = await prisma.participant.create({

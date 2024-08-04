@@ -3,6 +3,7 @@ import {
   serializerCompiler,
   validatorCompiler,
 } from "fastify-type-provider-zod";
+import { errorHandler } from "./error-handler";
 import {
   confirmParticipant,
   confirmTrip,
@@ -22,6 +23,8 @@ export const app = fastify();
 
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
+
+app.setErrorHandler(errorHandler);
 
 app.register(confirmParticipant);
 app.register(confirmTrip);

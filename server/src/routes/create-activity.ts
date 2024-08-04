@@ -1,6 +1,7 @@
 import type { FastifyInstance } from "fastify";
 import type { ZodTypeProvider } from "fastify-type-provider-zod";
 import { z } from "zod";
+import { ClientError } from "../errors";
 import { dayjs, prisma } from "../lib";
 
 export async function createActivity(app: FastifyInstance) {
@@ -26,14 +27,14 @@ export async function createActivity(app: FastifyInstance) {
       });
 
       if (!trip) {
-        throw new Error("Trip not found.");
+        throw new ClientError("Trip not found.");
       }
 
       if (
         dayjs(occurs_at).isBefore(trip.starts_at) ||
         dayjs(occurs_at).isAfter(trip.ends_at)
       ) {
-        throw new Error(
+        throw new ClientError(
           "Invalid activity date. Date must be between trip dates.",
         );
       }

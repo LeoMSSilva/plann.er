@@ -2,6 +2,7 @@ import type { FastifyInstance } from "fastify";
 import type { ZodTypeProvider } from "fastify-type-provider-zod";
 import { z } from "zod";
 import { env } from "../env";
+import { ClientError } from "../errors";
 import { dayjs, formattedDate, prisma, sendMail } from "../lib";
 import { mailConfirmUpdateTrip } from "../templates";
 
@@ -36,17 +37,17 @@ export async function updateTrip(app: FastifyInstance) {
       });
 
       if (!trip) {
-        throw new Error("Trip not found.");
+        throw new ClientError("Trip not found.");
       }
 
       if (dayjs(starts_at).isBefore(new Date())) {
-        throw new Error(
+        throw new ClientError(
           "Invalid trip start date. It cannot be less than today.",
         );
       }
 
       if (dayjs(ends_at).isBefore(starts_at)) {
-        throw new Error(
+        throw new ClientError(
           "Invalid trip end date. It cannot be smaller than the initial.",
         );
       }
