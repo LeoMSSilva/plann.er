@@ -1,3 +1,4 @@
+import cors from "@fastify/cors";
 import fastify from "fastify";
 import {
   serializerCompiler,
@@ -25,6 +26,10 @@ app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
 
 app.setErrorHandler(errorHandler);
+
+app.register(cors, {
+  origin: "*",
+});
 
 app.register(confirmParticipant);
 app.register(confirmTrip);
