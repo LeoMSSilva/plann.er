@@ -116,14 +116,17 @@ export function TripDetails() {
     if (!formatValidationURL(url)) return false;
 
     const newLink: ILink = {
-      id: String(inputParticipants.length + 1),
       title,
       url,
     };
 
-    setInputLinks([...inputLinks, newLink]);
+    const {
+      data: { linkId },
+    } = await api.post(`trips/${tripId}/links`, newLink);
 
-    await api.post(`trips/${tripId}/links`, newLink);
+    newLink.id = linkId;
+
+    setInputLinks([...inputLinks, newLink]);
 
     return true;
   }
