@@ -72,25 +72,13 @@ export function TripDetails() {
       return false;
     }
 
-    // const newActivity: IActivity = {
-    //   date: occurs_at,
-    //   activities: [
-    //     {
-    //       id: String(inputActivities.length + 1),
-    //       title,
-    //       occurs_at,
-    //     },
-    //   ],
-    // };
-
-    // setInputActivities([...inputActivities, newActivity]);
-
-    const response = await api.post(`trips/${tripId}/activities`, {
+    await api.post(`trips/${tripId}/activities`, {
       title,
       occurs_at,
     });
-    console.log(response);
+
     await requestActivities();
+
     return true;
   }
 
