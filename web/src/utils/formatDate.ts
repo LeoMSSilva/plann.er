@@ -8,13 +8,13 @@ export function formatPresentationDate({ from, to }: DateRange) {
   if (typeof to === "undefined") {
     return format(from, "d' de 'LLL");
   }
-  return format(from, "d' de 'LLL")
+  return format(from, "d' de 'LLL", {locale: ptBR})
     .concat(" até ")
-    .concat(format(to, "d' de 'LLL"));
+    .concat(format(to, "d' de 'LLL", {locale: ptBR}));
 }
 
 export function formatPresentationDay(date: string) {
-  return `Dia ${format(date, "d")}`;
+  return `Dia ${format(date, "d", {locale: ptBR})}`;
 }
 
 export function formatPresentationWeekDay(date: string) {
