@@ -16,6 +16,8 @@ import {
 } from "./Components";
 
 export function TripDetails() {
+  const { tripId } = useParams();
+
   const [inputLocal, setInputLocal] = useState("");
   const [datePickerRange, setDatePickerRange] = useState<
     DateRange | undefined
@@ -150,20 +152,21 @@ export function TripDetails() {
     }
 
     const newParticipant: IParticipant = {
-      id: String(inputParticipants.length + 1),
       name,
       email,
       is_confirmed: false,
     };
 
-    setInputParticipants([...inputParticipants, newParticipant]);
+    const {
+      data: { participantId },
+    } = await api.post(`trips/${tripId}/invites`, newParticipant);
 
-    await api.post(`trips/${tripId}/invites`, newParticipant);
+    newParticipant.id = participantId;
+
+    setInputParticipants([...inputParticipants, newParticipant]);
 
     return true;
   }
-
-  const { tripId } = useParams();
 
   const requestLocalAndDate = useCallback(() => {
     api.get(`trips/${tripId}`).then((response) => {

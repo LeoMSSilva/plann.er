@@ -1,5 +1,5 @@
 export interface IParticipant {
-  id: string;
+  id?: string;
   name: string;
   email: string;
   is_confirmed: boolean;
