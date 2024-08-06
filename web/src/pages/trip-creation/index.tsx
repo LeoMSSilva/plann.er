@@ -96,9 +96,10 @@ export function TripCreation() {
 
     const trip = {
       destination: inputLocal,
-      emails_to_invite: inputParticipants.map(
-        (participant) => participant.email,
-      ),
+      participants: inputParticipants.map((participant) => ({
+        name: participant.name,
+        email: participant.email,
+      })),
       starts_at: datePickerRange.from.toString(),
       ends_at: datePickerRange.to
         ? datePickerRange.to.toString()
