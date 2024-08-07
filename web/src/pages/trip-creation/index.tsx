@@ -84,6 +84,10 @@ export function TripCreation() {
 
     if (!formatValidationEmail(email)) return;
 
+    if (inputParticipants.map((p) => p.email).includes(email)) {
+      alert("Seu e-mail não pode ser o mesmo dos convidados");
+    }
+
     if (
       !inputLocal ||
       !datePickerRange?.from ||
