@@ -31,6 +31,7 @@ export function TripDetails() {
   );
   const [isLoadingChangeTrip, setIsLoadingChangeTrip] = useState(false);
   const [isLoadingActivities, setIsLoadingActivities] = useState(false);
+  const [isLoadingLinks, setIsLoadingLinks] = useState(false);
 
   const presentationDate =
     (datePickerRange && formatPresentationDate(datePickerRange)) || "";
@@ -94,6 +95,7 @@ export function TripDetails() {
     event: FormEvent<HTMLFormElement>,
   ): Promise<boolean> {
     event.preventDefault();
+    setIsLoadingLinks(true);
 
     const data = new FormData(event.currentTarget);
     const title = data.get("title") as string;
@@ -101,15 +103,20 @@ export function TripDetails() {
 
     if (!url || !title) {
       alert("Preencha todos os campos");
+      setIsLoadingLinks(false);
       return false;
     }
 
     if (inputLinks.map((link) => link.url).includes(url)) {
       alert("Este link já foi adicionado");
+      setIsLoadingLinks(false);
       return false;
     }
 
-    if (!formatValidationURL(url)) return false;
+    if (!formatValidationURL(url)) {
+      setIsLoadingLinks(false);
+      return false;
+    }
 
     const newLink: ILink = {
       title,
@@ -124,6 +131,7 @@ export function TripDetails() {
 
     setInputLinks([...inputLinks, newLink]);
 
+    setIsLoadingLinks(false);
     return true;
   }
 
@@ -232,6 +240,7 @@ export function TripDetails() {
           <ImportantLinksList
             inputLinks={inputLinks}
             handleCreateLinkModal={handleCreateLinkModal}
+            isLoading={isLoadingLinks}
           />
 
           <SeparatorX />

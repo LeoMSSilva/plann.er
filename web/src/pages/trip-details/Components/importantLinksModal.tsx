@@ -1,4 +1,4 @@
-import { Link2, Tag } from "lucide-react";
+import { Link2, LoaderCircle, Tag } from "lucide-react";
 import { type FormEvent, useState } from "react";
 import {
   Button,
@@ -13,11 +13,13 @@ interface IImportantLinksModalProps {
   handleCreateLinkModal: (
     value: FormEvent<HTMLFormElement>,
   ) => Promise<boolean>;
+  isLoading: boolean;
 }
 
 export const ImportantLinksModal = ({
   handleToggleCreateLinksModal,
   handleCreateLinkModal,
+  isLoading,
 }: IImportantLinksModalProps) => {
   const [inputLinkTitle, setInputLinkTitle] = useState("");
   const [inputLinkOccursAt, setInputLinkOccursAt] = useState("");
@@ -72,8 +74,10 @@ export const ImportantLinksModal = ({
         <Button
           size="full"
           type="submit"
+          disabled={isLoading}
         >
           Salvar link
+          {isLoading && <LoaderCircle className="size-5 animate-spin" />}
         </Button>
       </form>
     </ModalContainer>

@@ -9,11 +9,13 @@ interface IImportantLinksListProps {
   handleCreateLinkModal: (
     value: FormEvent<HTMLFormElement>,
   ) => Promise<boolean>;
+  isLoading: boolean;
 }
 
 export const ImportantLinksList = ({
   inputLinks,
   handleCreateLinkModal,
+  isLoading,
 }: IImportantLinksListProps) => {
   const [isLinksModalOpen, setIsLinksModalOpen] = useState(false);
 
@@ -66,6 +68,7 @@ export const ImportantLinksList = ({
         <ImportantLinksModal
           handleToggleCreateLinksModal={handleToggleCreateLinksModal}
           handleCreateLinkModal={handleCreateLinkModal}
+          isLoading={isLoading}
         />
       )}
     </>
