@@ -32,7 +32,7 @@ export async function createActivity(app: FastifyInstance) {
 
       if (
         dayjs(occurs_at).isBefore(trip.starts_at) ||
-        dayjs(occurs_at).isAfter(trip.ends_at)
+        dayjs(occurs_at.getDate()).isAfter(trip.ends_at)
       ) {
         throw new ClientError(
           "Invalid activity date. Date must be between trip dates.",
