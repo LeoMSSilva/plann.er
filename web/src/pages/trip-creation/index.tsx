@@ -24,6 +24,7 @@ export function TripCreation() {
   );
   const [inputInviterName, setInputInviterName] = useState("");
   const [inputInviterEmail, setInputInviterEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const presentationDate =
     (datePickerRange && formatPresentationDate(datePickerRange)) || "";
@@ -72,6 +73,7 @@ export function TripCreation() {
 
   async function handleConfirmTrip(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    setIsLoading(true);
 
     const data = new FormData(event.currentTarget);
     const name = data.get("name") as string;
@@ -79,13 +81,19 @@ export function TripCreation() {
 
     if (!email || !name) {
       alert("Preencha todos os campos");
+      setIsLoading(false);
       return;
     }
 
-    if (!formatValidationEmail(email)) return;
+    if (!formatValidationEmail(email)) {
+      setIsLoading(false);
+      return;
+    }
 
     if (inputParticipants.map((p) => p.email).includes(email)) {
       alert("Seu e-mail não pode ser o mesmo dos convidados");
+      setIsLoading(false);
+      return;
     }
 
     if (
@@ -95,6 +103,7 @@ export function TripCreation() {
       !inputInviterEmail ||
       !inputInviterName
     ) {
+      setIsLoading(false);
       return;
     }
 
@@ -117,6 +126,8 @@ export function TripCreation() {
     } = await api.post("/trips", trip);
 
     navigate(`/trips/${tripId}`);
+
+    setIsLoading(false);
   }
 
   return (
@@ -144,6 +155,7 @@ export function TripCreation() {
             inputInviterEmail={inputInviterEmail}
             setInputInviterEmail={setInputInviterEmail}
             handleConfirmTrip={handleConfirmTrip}
+            isLoading={isLoading}
           />
         )}
       </div>

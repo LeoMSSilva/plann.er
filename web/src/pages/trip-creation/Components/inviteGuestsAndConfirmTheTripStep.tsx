@@ -15,6 +15,7 @@ interface IInviteGuestsAndConfirmTheTripStepProps {
   inputInviterEmail: string;
   setInputInviterEmail: (value: string) => void;
   handleConfirmTrip: (value: FormEvent<HTMLFormElement>) => void;
+  isLoading: boolean;
 }
 
 export function InviteGuestsAndConfirmTheTripStep({
@@ -28,6 +29,7 @@ export function InviteGuestsAndConfirmTheTripStep({
   inputInviterEmail,
   setInputInviterEmail,
   handleConfirmTrip,
+  isLoading,
 }: IInviteGuestsAndConfirmTheTripStepProps) {
   const [isGuestModalOpen, setIsGuestModalOpen] = useState(false);
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
@@ -87,6 +89,7 @@ export function InviteGuestsAndConfirmTheTripStep({
           inputInviterName={inputInviterName}
           setInputInviterName={setInputInviterName}
           handleConfirmTrip={handleConfirmTrip}
+          isLoading={isLoading}
         />
       )}
     </InputContainer>

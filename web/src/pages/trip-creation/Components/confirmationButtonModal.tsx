@@ -1,4 +1,4 @@
-import { Mail, User } from "lucide-react";
+import { LoaderCircle, Mail, User } from "lucide-react";
 import type { FormEvent } from "react";
 import {
   Button,
@@ -17,6 +17,7 @@ interface IConfirmationButtonModalProps {
   inputInviterEmail: string;
   setInputInviterEmail: (value: string) => void;
   handleConfirmTrip: (event: FormEvent<HTMLFormElement>) => void;
+  isLoading: boolean;
 }
 export const ConfirmationButtonModal = ({
   inputLocal,
@@ -27,6 +28,7 @@ export const ConfirmationButtonModal = ({
   inputInviterEmail,
   setInputInviterEmail,
   handleConfirmTrip,
+  isLoading,
 }: IConfirmationButtonModalProps) => {
   return (
     <ModalContainer>
@@ -69,10 +71,12 @@ export const ConfirmationButtonModal = ({
           </Input>
         </InputContainer>
         <Button
+          disabled={isLoading}
           size="full"
           type="submit"
         >
           Criar viagem
+          {isLoading && <LoaderCircle className="size-5 animate-spin" />}
         </Button>
       </form>
     </ModalContainer>
