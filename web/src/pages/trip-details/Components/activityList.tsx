@@ -12,11 +12,13 @@ import {
 interface IActivityListProps {
   inputActivities: IActivity[];
   handleActivityModal: (value: FormEvent<HTMLFormElement>) => Promise<boolean>;
+  isLoading: boolean;
 }
 
 export const ActivityList = ({
   inputActivities,
   handleActivityModal,
+  isLoading,
 }: IActivityListProps) => {
   const [isActivitiesModalOpen, setIsActivitiesModalOpen] = useState(false);
 
@@ -79,6 +81,7 @@ export const ActivityList = ({
         <ActivityModal
           handleToggleCreateActivitiesModal={handleToggleCreateActivitiesModal}
           handleActivityModal={handleActivityModal}
+          isLoading={isLoading}
         />
       )}
     </>

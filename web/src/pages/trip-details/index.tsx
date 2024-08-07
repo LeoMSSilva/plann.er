@@ -30,6 +30,7 @@ export function TripDetails() {
     [],
   );
   const [isLoadingChangeTrip, setIsLoadingChangeTrip] = useState(false);
+  const [isLoadingActivities, setIsLoadingActivities] = useState(false);
 
   const presentationDate =
     (datePickerRange && formatPresentationDate(datePickerRange)) || "";
@@ -53,6 +54,7 @@ export function TripDetails() {
     event: FormEvent<HTMLFormElement>,
   ): Promise<boolean> {
     event.preventDefault();
+    setIsLoadingActivities(true);
 
     const data = new FormData(event.currentTarget);
     const title = data.get("title") as string;
@@ -60,6 +62,7 @@ export function TripDetails() {
 
     if (!occurs_at || !title) {
       alert("Preencha todos os campos");
+      setIsLoadingActivities(false);
       return false;
     }
 
@@ -72,6 +75,7 @@ export function TripDetails() {
       )
     ) {
       alert("Esta atividade já foi adicionada");
+      setIsLoadingActivities(false);
       return false;
     }
 
@@ -82,6 +86,7 @@ export function TripDetails() {
 
     await requestActivities();
 
+    setIsLoadingActivities(false);
     return true;
   }
 
@@ -220,6 +225,7 @@ export function TripDetails() {
         <ActivityList
           inputActivities={inputActivities}
           handleActivityModal={handleActivityModal}
+          isLoading={isLoadingActivities}
         />
 
         <div className="w-80 space-y-6">

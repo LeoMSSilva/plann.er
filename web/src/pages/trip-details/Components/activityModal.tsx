@@ -1,4 +1,4 @@
-import { Calendar, Tag } from "lucide-react";
+import { Calendar, LoaderCircle, Tag } from "lucide-react";
 import { type FormEvent, useState } from "react";
 import {
   Button,
@@ -11,11 +11,13 @@ import {
 interface IActivityModalProps {
   handleToggleCreateActivitiesModal: (value: boolean) => void;
   handleActivityModal: (value: FormEvent<HTMLFormElement>) => Promise<boolean>;
+  isLoading: boolean;
 }
 
 export const ActivityModal = ({
   handleToggleCreateActivitiesModal,
   handleActivityModal,
+  isLoading,
 }: IActivityModalProps) => {
   const [inputActivityTitle, setInputActivityTitle] = useState("");
   const [inputActivityURL, setInputActivityURL] = useState("");
@@ -70,8 +72,10 @@ export const ActivityModal = ({
         <Button
           size="full"
           type="submit"
+          disabled={isLoading}
         >
           Salvar atividade
+          {isLoading && <LoaderCircle className="size-5 animate-spin" />}
         </Button>
       </form>
     </ModalContainer>
