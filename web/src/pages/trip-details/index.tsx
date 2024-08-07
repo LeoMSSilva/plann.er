@@ -32,6 +32,7 @@ export function TripDetails() {
   const [isLoadingChangeTrip, setIsLoadingChangeTrip] = useState(false);
   const [isLoadingActivities, setIsLoadingActivities] = useState(false);
   const [isLoadingLinks, setIsLoadingLinks] = useState(false);
+  const [isLoadingInvites, setIsLoadingInvites] = useState(false);
 
   const presentationDate =
     (datePickerRange && formatPresentationDate(datePickerRange)) || "";
@@ -139,6 +140,7 @@ export function TripDetails() {
     event: FormEvent<HTMLFormElement>,
   ): Promise<boolean> {
     event.preventDefault();
+    setIsLoadingInvites(true);
 
     const data = new FormData(event.currentTarget);
     const name = data.get("name") as string;
@@ -146,15 +148,20 @@ export function TripDetails() {
 
     if (!email || !name) {
       alert("Preencha todos os campos");
+      setIsLoadingInvites(false);
       return false;
     }
 
-    if (!formatValidationEmail(email)) return false;
+    if (!formatValidationEmail(email)) {
+      setIsLoadingInvites(false);
+      return false;
+    }
 
     if (
       inputParticipants.map((participant) => participant.email).includes(email)
     ) {
       alert("Este email ja foi adicionado");
+      setIsLoadingInvites(false);
       return false;
     }
 
@@ -172,6 +179,7 @@ export function TripDetails() {
 
     setInputParticipants([...inputParticipants, newParticipant]);
 
+    setIsLoadingInvites(false);
     return true;
   }
 
@@ -250,6 +258,7 @@ export function TripDetails() {
             inputDate={presentationDate}
             inputLocal={inputLocal}
             handleInviteToTravelModal={handleInviteToTravelModal}
+            isLoading={isLoadingInvites}
           />
         </div>
       </main>

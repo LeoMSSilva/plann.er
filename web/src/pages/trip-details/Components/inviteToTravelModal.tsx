@@ -1,4 +1,4 @@
-import { Mail, User } from "lucide-react";
+import { LoaderCircle, Mail, User } from "lucide-react";
 import { type FormEvent, useState } from "react";
 import {
   Button,
@@ -15,6 +15,7 @@ interface IInviteToTravelModalProps {
   handleInviteToTravelModal: (
     value: FormEvent<HTMLFormElement>,
   ) => Promise<boolean>;
+  isLoading: boolean;
 }
 
 export const InviteToTravelModal = ({
@@ -22,6 +23,7 @@ export const InviteToTravelModal = ({
   inputDate,
   handleToggleInviteToTravelModal,
   handleInviteToTravelModal,
+  isLoading,
 }: IInviteToTravelModalProps) => {
   const [inputParticipantName, setInputParticipantName] = useState("");
   const [inputParticipantEmail, setInputParticipantEmail] = useState("");
@@ -83,8 +85,10 @@ export const InviteToTravelModal = ({
         <Button
           size="full"
           type="submit"
+          disabled={isLoading}
         >
           Confirmar minha presença
+          {isLoading && <LoaderCircle className="size-5 animate-spin" />}
         </Button>
       </form>
     </ModalContainer>

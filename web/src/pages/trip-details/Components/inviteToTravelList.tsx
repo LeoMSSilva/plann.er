@@ -11,12 +11,14 @@ interface IInviteToTravelListProps {
   handleInviteToTravelModal: (
     value: FormEvent<HTMLFormElement>,
   ) => Promise<boolean>;
+  isLoading: boolean;
 }
 export const InviteToTravelList = ({
   inputLocal,
   inputDate,
   inputParticipants,
   handleInviteToTravelModal,
+  isLoading,
 }: IInviteToTravelListProps) => {
   const [isInviteToTravelModalOpen, setIsInviteToTravelModalOpen] =
     useState(false);
@@ -76,6 +78,7 @@ export const InviteToTravelList = ({
           inputDate={inputDate}
           inputLocal={inputLocal}
           handleInviteToTravelModal={handleInviteToTravelModal}
+          isLoading={isLoading}
         />
       )}
     </>
