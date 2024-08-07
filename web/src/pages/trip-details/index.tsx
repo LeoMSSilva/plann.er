@@ -29,12 +29,14 @@ export function TripDetails() {
   const [inputParticipants, setInputParticipants] = useState<IParticipant[]>(
     [],
   );
+  const [isLoadingChangeTrip, setIsLoadingChangeTrip] = useState(false);
 
   const presentationDate =
     (datePickerRange && formatPresentationDate(datePickerRange)) || "";
 
   async function handleContinue() {
     if (!inputLocal || !datePickerRange?.from) return;
+    setIsLoadingChangeTrip(true);
 
     await api.put(`/trips/${tripId}`, {
       destination: inputLocal,
@@ -44,6 +46,7 @@ export function TripDetails() {
         : datePickerRange.from.toString(),
     });
     requestActivities();
+    setIsLoadingChangeTrip(false);
   }
 
   async function handleActivityModal(
@@ -211,6 +214,7 @@ export function TripDetails() {
         isEditableLocalAndDate={isEditableLocalAndDate}
         setIsEditableLocalAndDate={setIsEditableLocalAndDate}
         handleContinue={handleContinue}
+        isLoading={isLoadingChangeTrip}
       />
       <main className="flex gap-16 px-6">
         <ActivityList

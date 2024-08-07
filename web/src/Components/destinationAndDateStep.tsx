@@ -1,4 +1,4 @@
-import { ArrowRight, MapPin, Settings2 } from "lucide-react";
+import { ArrowRight, LoaderCircle, MapPin, Settings2 } from "lucide-react";
 import type { DateRange } from "react-day-picker";
 import { Button, Input, InputContainer, SeparatorY } from ".";
 import { DatePickerModal } from "../pages/trip-creation/Components";
@@ -11,6 +11,7 @@ interface IDestinationAndDateStepProps {
   isEditableLocalAndDate: boolean;
   setIsEditableLocalAndDate: (value: boolean) => void;
   handleContinue?: () => void;
+  isLoading?: boolean;
 }
 export function DestinationAndDateStep({
   datePickerRange,
@@ -20,6 +21,7 @@ export function DestinationAndDateStep({
   isEditableLocalAndDate,
   setIsEditableLocalAndDate,
   handleContinue,
+  isLoading,
 }: IDestinationAndDateStepProps) {
   function handleToggleIsEditableLocalAndDate(state: boolean) {
     setIsEditableLocalAndDate(state);
@@ -48,14 +50,16 @@ export function DestinationAndDateStep({
       <SeparatorY />
 
       <Button
-        disabled={!(inputLocal && datePickerRange)}
+        disabled={!(inputLocal && datePickerRange) || isLoading}
         type="button"
-        variant={!isEditableLocalAndDate ? "secondary" : "primary"}
+        variant={
+          !isEditableLocalAndDate && !isLoading ? "secondary" : "primary"
+        }
         onClick={() =>
           handleToggleIsEditableLocalAndDate(!isEditableLocalAndDate)
         }
       >
-        {!isEditableLocalAndDate ? (
+        {!isEditableLocalAndDate && !isLoading ? (
           <>
             Alterar local/data
             <Settings2 className="size-5" />
@@ -63,7 +67,11 @@ export function DestinationAndDateStep({
         ) : (
           <>
             Continuar
-            <ArrowRight className="size-5" />
+            {isLoading ? (
+              <LoaderCircle className="size-5 animate-spin" />
+            ) : (
+              <ArrowRight className="size-5" />
+            )}
           </>
         )}
       </Button>
