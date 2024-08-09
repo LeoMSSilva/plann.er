@@ -32,7 +32,7 @@
 
 **Vitejs plugin react swc** to speed up the build and auto reload in dev of the application.
 
-**Typescript** as a programming language used through the **reactJs** framework and transpiled to javascript.
+**Typescript** as a programming language used through the **reactJs** framework and transpiled to **javascript**.
 
 **React dom** to route application navigation.
 
@@ -54,7 +54,7 @@
 
 **Husky** and **lint-staged** to automate tasks during git flow.
 
-This application is used to create a complete agenda for a trip, including its activities, participants and important links.
+This application is used to create a complete agenda for a trip, including its activities, participants and important links. It has confirmation emails for the trip and its participants, as well as notifications of updates to the data registered for the trip.
 
 You can access the project through the qr code published at **[deploy](plann-er-leomssilva.vercel.app)**.
 
