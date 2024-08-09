@@ -52,6 +52,8 @@
 
 **BiomeJs** for formatting and linting the code.
 
+**Husky** and **lint-staged** to automate tasks during git flow.
+
 This application is used to create a complete agenda for a trip, including its activities, participants and important links.
 
 You can access the project through the qr code published at **[deploy](plann-er-leomssilva.vercel.app)**.
@@ -116,6 +118,8 @@ After being in the folder, run the following command to start the project:
 - BiomeJs
 - Date fns
 - Javascript
+- Husky
+- Lint-staged
 - Localforage
 - Lucide React
 - Match sorter
