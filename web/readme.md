@@ -64,9 +64,8 @@ You can access the project through the qr code published at **[deploy](plann-er-
 
 - [Node.js](https://pt-br.nodejs.org/) (required)
 - [Yarn](https://yarnpkg.com/) (optional)
-- [Expo](https://expo.io/) (required)
 
-  **Then in order, clone the project.**
+**Then in order, clone the project.**
 
 By HTTPS, running this command:
 
@@ -95,6 +94,14 @@ or
 ```
 
 ## :rocket: Getting Started
+
+To run the *front-end* use:
+
+```bash
+  cd web
+```
+
+After being in the folder, run the following command to start the project:
 
 ```bash
   yarn dev
@@ -148,4 +155,3 @@ Copyright :copyright: 2024 [LeoMSSilva](https://github.com/LeoMSSilva).
 This project is [MIT](https://github.com/LeoMSSilva/plann.er/blob/main/LICENSE) licensed.
 
 ---
-
