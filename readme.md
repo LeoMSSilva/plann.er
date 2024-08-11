@@ -1,6 +1,7 @@
 <h1 align="center">Plann.er
   <br/>
-  <img src="./demonstration.png">
+  <img src="./web/demonstration.png" width="49%">
+  <img src="./server/demonstration.png" width="49%">
   <br/>
 </h1>
 
@@ -30,6 +31,8 @@
 
 This application is used to create a complete agenda for a trip, including its activities, participants and important links. It has confirmation emails for the trip and its participants, as well as notifications of updates to the data registered for the trip.
 
+#### ***To the front-end:***
+
 **Vite** to manage the entire application.
 
 **Vitejs plugin react swc** to speed up the build and auto reload in dev of the application.
@@ -52,11 +55,35 @@ This application is used to create a complete agenda for a trip, including its a
 
 **Lucide react** for icon use in react.
 
+#### ***To the back-end:***
+
+**Typescript** as a programming language used through the **nodeJs** framework and transpiled to **javascript**.
+
+**Fastify** as a server and **fastify cors** for cors configuration.
+
+**Tsx** to manage all the auto-reloading of the application in the application dev.
+
+**Tsup** to speed up the build.
+
+**Zod** along with the **fastify type provider zod** to perform validations on routes and environment variables.
+
+**Prisma** and **prisma client** to connect and use the database in the application.
+
+**Nodemailer** to send emails.
+
+**DayJs** to format dates.
+
+#### ***Common to the project:***
+
 **BiomeJs** for formatting and linting the code.
 
 **Husky** and **lint-staged** to automate tasks during git flow.
 
-You can access the project via the **[link](plann-er-leomssilva.vercel.app)**.
+#### ***Access the project:***
+
+The front-end via the **[link](plann-er-leomssilva.vercel.app)**.
+
+The back-end via the **[link](#)**.
 
 ---
 
@@ -103,6 +130,12 @@ To run the *front-end* use:
   cd web
 ```
 
+Or to run the *back-end* use:
+
+```bash
+  cd server
+```
+
 After being in the folder, run the following command to start the project:
 
 ```bash
@@ -117,13 +150,20 @@ After being in the folder, run the following command to start the project:
 - Axios
 - BiomeJs
 - Date fns
+- DayJs
+- Fastify
+- Fastify cors
+- Fastify Type Provider Zod
 - Javascript
 - Husky
 - Lint-staged
 - Localforage
 - Lucide React
 - Match sorter
+- Nodemailer
 - Postcss
+- Prisma
+- Prisma Client
 - React day picker
 - React Dom
 - React router dom
@@ -131,9 +171,12 @@ After being in the folder, run the following command to start the project:
 - Sort by
 - TailwindCss
 - Tailwindcss Variants
+- Tsup
+- Tsx
 - Typescript
 - Vite
 - Vitejs Plugin React SWC
+- Zod
 
 ---
 

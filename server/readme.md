@@ -28,6 +28,8 @@
 
 # :house: About
 
+This application is used to create a complete agenda for a trip, including its activities, participants and important links. It has confirmation emails for the trip and its participants, as well as notifications of updates to the data registered for the trip.
+
 **Fastify** as a server and **fastify cors** for cors configuration.
 
 **Tsx** to manage all the auto-reloading of the application in the application dev.
@@ -48,9 +50,7 @@
 
 **Husky** and **lint-staged** to automate tasks during the git flow.
 
-This application is used to create a complete agenda for a trip, including its activities, participants and important links. It has confirmation emails for the trip and its participants, as well as notifications of updates to the data registered for the trip.
-
-You can access the project via the QR code published in **[deploy](#)**.
+You can access the project via the **[link](#)**.
 
 ---
 
