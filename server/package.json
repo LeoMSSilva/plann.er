@@ -10,7 +10,7 @@
     "dev": "tsx watch --env-file .env . ",
     "lint": "yarn biome check --write .",
     "lint-staged": "lint-staged",
-    "prepare": "cd .. && husky web/.husky && echo 'echo \"Husky pre-commit started!\\\\n\"\nnpx lint-staged\necho \"\\\\nHusky pre-commit finished!\\\\n\"' > web/.husky/pre-commit"
+    "prepare": "cd .. && husky server/.husky && echo 'echo \"Husky pre-commit started!\\\\n\"\nnpx lint-staged\necho \"\\\\nHusky pre-commit finished!\\\\n\"' > server/.husky/pre-commit"
   },
   "lint-staged": {
     "*": "yarn lint-staged"
