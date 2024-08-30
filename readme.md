@@ -81,7 +81,7 @@ This application is used to create a complete agenda for a trip, including its a
 
 #### ***Access the project:***
 
-The front-end via the **[link](plann-er-leomssilva.vercel.app)**.
+The front-end via the **[link](https://plann-er-leomssilva.vercel.app)**.
 
 The back-end via the **[link](#)**.
 

@@ -56,7 +56,7 @@ This application is used to create a complete agenda for a trip, including its a
 
 **Husky** and **lint-staged** to automate tasks during git flow.
 
-You can access the project via the **[link](plann-er-leomssilva.vercel.app)**.
+You can access the project via the **[link](https://plann-er-leomssilva.vercel.app)**.
 
 ---
 
