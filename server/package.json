@@ -22,7 +22,7 @@
     "dayjs": "^1.11.12",
     "fastify": "^4.28.1",
     "fastify-type-provider-zod": "^2.0.0",
-    "nodemailer": "^7.0.7",
+    "nodemailer": "^7.0.11",
     "zod": "^3.23.8"
   },
   "devDependencies": {
